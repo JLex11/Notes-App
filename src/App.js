@@ -1,5 +1,8 @@
-import './index.css';
 import { useEffect, useState } from 'react';
+import './index.css';
+import notesRequest from './services/notes';
+
+import { LoginForm } from './LoginForm';
 import { Note } from './Note';
 
 export const App = () => {
@@ -7,9 +10,11 @@ export const App = () => {
   const [newNote, setNewNote] = useState('');
 
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/posts')
+    notesRequest.getAll().then(setNotes);
+
+    /* fetch('https://jsonplaceholder.typicode.com/posts')
       .then(response => response.json())
-      .then(notes => setNotes(notes));
+      .then(notes => setNotes(notes)); */
   }, []);
 
   const handleChange = e => {
@@ -29,21 +34,20 @@ export const App = () => {
 
   return (
     <div className="App">
-      <h1>Notes</h1>
+      <LoginForm />
       <form className="Form" onSubmit={handleSubmit}>
+        <h1>Notes</h1>
         <input type="text" onChange={handleChange} value={newNote} />
         <button>agregar nota</button>
       </form>
-      {
-        notes.map(note => (
-          <Note
-            key={note.id}
-            id={note.id}
-            title={note.title}
-            body={note.body}
-          />
-        ))
-      }
+      {notes.map(note => (
+        <Note 
+          key={note.id} 
+          id={note.id} 
+          title={note.title} 
+          body={note.body}
+        />
+      ))}
     </div>
   );
 };

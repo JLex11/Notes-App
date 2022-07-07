@@ -17,19 +17,37 @@ code {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  padding: 20px;
+  padding: 10px;
   gap: 15px;
 }
 
 h1 {
   width: 100%;
-  font-size: 2.5em;
+  font-size: 3.5em;
   font-weight: bold;
-  margin: 0;
+  margin-bottom: 40px;
+}
+.Login {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(177, 177, 177);
+  background: rgb(238, 238, 238);
+  border-radius: 15px;
+  margin: 10px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+.LoginForm {
+  max-width: 500px;
+  width: 100%;
 }
 
 .Form {
-  width: 60%;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -44,11 +62,21 @@ h1 {
   border-radius: 15px;
   padding: 0.5rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+  transition: box-shadow 0.5s ease-in-out;
   text-transform: capitalize;
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   -ms-border-radius: 15px;
   -o-border-radius: 15px;
+  -webkit-transition: box-shadow 0.5s ease-in-out;
+  -moz-transition: box-shadow 0.5s ease-in-out;
+  -ms-transition: box-shadow 0.5s ease-in-out;
+  -o-transition: box-shadow 0.5s ease-in-out;
+}
+
+.Form input:focus-visible {
+  outline: 1px solid rgb(0, 112, 204);
+  box-shadow: 0 0 20px rgb(0, 112, 204);
 }
 
 .Note {
