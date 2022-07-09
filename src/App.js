@@ -1,5 +1,6 @@
 import 'material-symbols';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ThreeDots } from 'react-loader-spinner';
 import { Header } from './components/Header';
 import { LoginForm } from './components/LoginForm';
 import { Note } from './components/Note';
@@ -12,9 +13,13 @@ import notesRequest from './services/notesRequest';
 export const App = () => {
   const [notes, setNotes] = useState([]);
   const [user, setUser] = useState(null);
-  const [error, setError] = useState(null);
+  const [message, setMessage] = useState('Loading');
 
-  const notesRef = useRef();
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      setMessage('');
+    }, 1000);
+  });
 
   useEffect(() => {
     notesRequest.getAll().then(setNotes);
@@ -40,7 +45,7 @@ export const App = () => {
       const addedNote = await notesRequest.create({ note: toAddNote });
       setNotes(notes.concat(addedNote));
     } catch {
-      setError('Note creation failed');
+      setMessage('Note creation failed');
     }
   };
 
@@ -51,10 +56,8 @@ export const App = () => {
       notesRequest.setToken(user.token);
       setUser(user);
     } catch {
-      setError('Error al iniciar sesión');
-      setTimeout(() => { 
-        setError(null);
-      }, 5000);
+      setMessage('Error al iniciar sesión');
+      setTimeout(() => setMessage(null), 3000);
     }
   }
 
@@ -63,16 +66,21 @@ export const App = () => {
       await notesRequest.delete({ id });
       setNotes(notes.filter(note => note.id !== id));
     } catch {
-      setError('Note deletion failed');
+      setMessage('Note deletion failed');
+      setTimeout(() => { 
+        setMessage(null);
+      }, 3000);
     }
   }
-
-  console.log({notesRef});
 
   return (
     <div className="App">
       <Header user={user} handleSetUser={handleSetUser} />
-      {error ? <Notification message={error} /> : null}
+      {message ?
+        <Notification message={message}>
+          <ThreeDots color="white" height={30} width={50} />
+        </Notification>
+        : null}
       {!user ? (
         <LoginForm
           handleLoginSubmit={handleLoginSubmit}

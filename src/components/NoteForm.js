@@ -18,6 +18,10 @@ export const NoteForm = ({addNote}) => {
 
       addNote(toAddNote);
       setNewNote('');
+      window.scrollTo({
+        top: document.body.offsetHeight,
+        behavior: 'smooth'
+      });
     }
   }
 
