@@ -5,7 +5,7 @@ import 'moment/locale/es';
 moment.locale("es");
 
 export const Note = (note) => {
-  const { id, content, date, important, handleDeleteNote, timeTransition, user, children } = note;
+  const { id, content, date, important, handleDeleteNote, timeTransition, user } = note;
   const dateFormatted = moment(date).startOf("minute").fromNow();
 
   const customStyles = {
@@ -15,7 +15,6 @@ export const Note = (note) => {
 
   return (
     <div className={`Note i-${important}`} style={customStyles} >
-      {children}
       <div className="HeaderNote">
         <div className="Date">
           <span className='material-symbols-outlined'>history</span>

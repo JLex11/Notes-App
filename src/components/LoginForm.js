@@ -1,10 +1,9 @@
 import { useState } from "react";
+import { Button } from "./FormButton";
 
 export const LoginForm = ({handleLoginSubmit}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
-  const disabledBtn = !username || !password ? true : false;
 
   const handleUsernameChange = e => { 
     setUsername(e.target.value);
@@ -22,20 +21,23 @@ export const LoginForm = ({handleLoginSubmit}) => {
   return (
     <div className="Login">
       <form className="LoginForm Form" onSubmit={handleSubmit}>
-        <h1>Iniciar Sesión</h1>
+        <h1>Login</h1>
         <input 
           type="text" 
-          placeholder="username" 
+          placeholder="Username" 
           value={username} 
           onChange={handleUsernameChange} 
         />
         <input 
           type="password" 
-          placeholder="password" 
+          placeholder="Password" 
           value={password} 
           onChange={handleSetPassword} 
         />
-        <button className={disabledBtn ? 'disabledBtn' : null}>login</button>
+        <Button content={'Accept'} disable={!username || !password ? true : false} >
+          <span className="material-symbols-outlined">input</span>
+        </Button>
+        
       </form>
     </div>
   );

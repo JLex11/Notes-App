@@ -1,6 +1,6 @@
 import 'material-symbols';
 import { useEffect, useState } from 'react';
-import { ThreeDots } from 'react-loader-spinner';
+import { TailSpin } from 'react-loader-spinner';
 import { Header } from './components/Header';
 import { LoginForm } from './components/LoginForm';
 import { Note } from './components/Note';
@@ -8,7 +8,6 @@ import { NoteForm } from './components/NoteForm';
 import { Notification } from './components/Notification';
 import loginRequest from './services/loginRequest';
 import notesRequest from './services/notesRequest';
-
 
 export const App = () => {
   const [notes, setNotes] = useState([]);
@@ -78,7 +77,7 @@ export const App = () => {
       <Header user={user} handleSetUser={handleSetUser} />
       {message ?
         <Notification message={message}>
-          <ThreeDots color="white" height={30} width={50} />
+          <TailSpin	color="white" height={30} width={50} />
         </Notification>
         : null}
       {!user ? (
@@ -101,7 +100,6 @@ export const App = () => {
             timeTransition={'0.' + i + 's'}
             user={user}
           />
-
         )}
       </div>
     </div>

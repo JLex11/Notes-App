@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button } from "./FormButton";
 
 export const NoteForm = ({addNote}) => { 
   const [newNote, setNewNote] = useState('');
@@ -34,7 +35,9 @@ export const NoteForm = ({addNote}) => {
         value={newNote}
         placeholder="Enter a new note"
       />
-      <button>agregar nota</button>
+      <Button content={'Add a new note'} disable={newNote.length < 1} >
+        <span className="material-symbols-outlined">note_add</span>
+      </Button>
     </form>
   )
 };
