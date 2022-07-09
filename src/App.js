@@ -1,53 +1,101 @@
-import { useEffect, useState } from 'react';
-import './index.css';
-import notesRequest from './services/notes';
+import 'material-symbols';
+import { useEffect, useRef, useState } from 'react';
+import { Header } from './components/Header';
+import { LoginForm } from './components/LoginForm';
+import { Note } from './components/Note';
+import { NoteForm } from './components/NoteForm';
+import { Notification } from './components/Notification';
+import loginRequest from './services/loginRequest';
+import notesRequest from './services/notesRequest';
 
-import { LoginForm } from './LoginForm';
-import { Note } from './Note';
 
 export const App = () => {
   const [notes, setNotes] = useState([]);
-  const [newNote, setNewNote] = useState('');
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
+
+  const notesRef = useRef();
 
   useEffect(() => {
     notesRequest.getAll().then(setNotes);
-
-    /* fetch('https://jsonplaceholder.typicode.com/posts')
-      .then(response => response.json())
-      .then(notes => setNotes(notes)); */
   }, []);
 
-  const handleChange = e => {
-    setNewNote(e.target.value);
+  useEffect(() => {
+    const loggedUserJSON = localStorage.getItem('loggedNoteAppUser');
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+      notesRequest.setToken(user.token);
+    }
+  }, []);
+
+  const handleSetUser = () => {
+    setUser(null);
+    localStorage.removeItem('loggedNoteAppUser');
+    notesRequest.setToken(null);
+  }
+
+  const addNote = async (toAddNote) => {
+    try {
+      const addedNote = await notesRequest.create({ note: toAddNote });
+      setNotes(notes.concat(addedNote));
+    } catch {
+      setError('Note creation failed');
+    }
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    const newNoteToAddState = {
-      id: notes.length + 1,
-      title: newNote,
-      body: newNote,
-    };
-    setNotes(notes.concat(newNoteToAddState));
-    setNewNote('');
-  };
+  const handleLoginSubmit = async (username, password) => {
+    try {
+      const user = await loginRequest.login({ username, password });
+      localStorage.setItem('loggedNoteAppUser', JSON.stringify(user));
+      notesRequest.setToken(user.token);
+      setUser(user);
+    } catch {
+      setError('Error al iniciar sesión');
+      setTimeout(() => { 
+        setError(null);
+      }, 5000);
+    }
+  }
+
+  const handleDeleteNote = async id => {
+    try {
+      await notesRequest.delete({ id });
+      setNotes(notes.filter(note => note.id !== id));
+    } catch {
+      setError('Note deletion failed');
+    }
+  }
+
+  console.log({notesRef});
 
   return (
     <div className="App">
-      <LoginForm />
-      <form className="Form" onSubmit={handleSubmit}>
-        <h1>Notes</h1>
-        <input type="text" onChange={handleChange} value={newNote} />
-        <button>agregar nota</button>
-      </form>
-      {notes.map(note => (
-        <Note 
-          key={note.id} 
-          id={note.id} 
-          title={note.title} 
-          body={note.body}
+      <Header user={user} handleSetUser={handleSetUser} />
+      {error ? <Notification message={error} /> : null}
+      {!user ? (
+        <LoginForm
+          handleLoginSubmit={handleLoginSubmit}
         />
-      ))}
+      ) : (
+        <NoteForm addNote={addNote} />
+      )}
+
+      <div className="Notes">
+        {notes.map((note, i) =>
+          <Note
+            key={note.id}
+            id={note.id}
+            content={note.content}
+            date={note.date}
+            important={note.important}
+            handleDeleteNote={handleDeleteNote}
+            timeTransition={'0.' + i + 's'}
+            user={user}
+          />
+
+        )}
+      </div>
     </div>
   );
 };
