@@ -68,7 +68,7 @@ span.LogOut:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
   border-radius: 15px;
   position: absolute;
-  top: 20px;
+  top: 30px;
   left: -100%;
   z-index: 1000;
   animation: aparecerNotification 0.5s forwards;
@@ -76,7 +76,7 @@ span.LogOut:hover {
 
 @keyframes aparecerNotification {
   100% {
-    left: 20px;
+    left: 30px;
   }
 }
 
