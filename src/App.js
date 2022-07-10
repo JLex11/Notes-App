@@ -1,6 +1,7 @@
 import 'material-symbols';
 import { useEffect, useState } from 'react';
 import { TailSpin } from 'react-loader-spinner';
+import { ButtonHidden } from './components/ButtonHidden';
 import { Header } from './components/Header';
 import { LoginForm } from './components/LoginForm';
 import { Note } from './components/Note';
@@ -13,6 +14,7 @@ export const App = () => {
   const [notes, setNotes] = useState([]);
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState('Loading');
+  const [hidden, setHidden] = useState(null);
 
   window.addEventListener('load', () => {
     setTimeout(() => {
@@ -72,6 +74,15 @@ export const App = () => {
     }
   }
 
+  const handleHiddenClick = () => { 
+    console.log('handleHiddenClick');
+    if (hidden) {
+      setHidden(false);
+    } else {
+      setHidden(true);
+    }
+  }
+
   return (
     <div className="App">
       <Header user={user} handleSetUser={handleSetUser} />
@@ -85,7 +96,11 @@ export const App = () => {
           handleLoginSubmit={handleLoginSubmit}
         />
       ) : (
-        <NoteForm addNote={addNote} />
+        <NoteForm addNote={addNote} >
+          <ButtonHidden handleHiddenClick={handleHiddenClick} >
+            <span className='material-symbols-outlined'>visibility</span>
+          </ButtonHidden>
+        </NoteForm>
       )}
 
       <div className="Notes">

@@ -10,7 +10,7 @@ export const Note = (note) => {
 
   const customStyles = {
     animationDelay: timeTransition,
-    gridColumn: content.length > 150 ? "span 2" : "span 1",
+    gridColumn: content.length > 150 ? "span 2" : "span 0",
   };
 
   return (

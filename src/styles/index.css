@@ -80,6 +80,19 @@ span.LogOut:hover {
   }
 }
 
+.Form button.ButtonHidden {
+  background: transparent;
+  box-shadow: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.ButtonHidden .material-symbols-outlined {
+  color: black;
+  font-size: 26pt;
+}
+
 .Login {
   width: 100%;
   display: flex;
@@ -300,5 +313,11 @@ b::first-letter {
 
   .i-false {
     background: linear-gradient(to bottom, #232323, #131313);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .Note {
+    grid-column: span 2 / auto;
   }
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "./FormButton";
 
-export const NoteForm = ({addNote}) => { 
+export const NoteForm = ({addNote, children}) => { 
   const [newNote, setNewNote] = useState('');
 
   const handleChange = e => { 
@@ -28,6 +28,7 @@ export const NoteForm = ({addNote}) => {
 
   return (
     <form className="Form" onSubmit={handleSubmit}>
+      {children}
       <h2>Notes</h2>
       <input
         type="text"
