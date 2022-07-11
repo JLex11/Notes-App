@@ -41,10 +41,14 @@ export const App = () => {
     setMessage(null);
   }
 
-  const handleLogout = () => {
+  const resetLogout = () => { 
     setUser(null);
     localStorage.removeItem('loggedNoteAppUser');
     notesRequest.setToken(null);
+  }
+
+  const handleLogout = () => {
+    resetLogout();
     setMessage({ msg: 'Logged out', type: 'info' });
   }
 
@@ -91,9 +95,9 @@ export const App = () => {
       notesRequest.setToken(user.token);
       setUser(user);
       setMessage({msg: 'Login successful', type: 'success'});
-    } catch (error) {
-      setMessage({ msg: 'Error al iniciar sesión', type: 'error'});
-      handleLogout();
+    } catch {
+      setMessage({ msg: 'User or password invalid', type: 'error'});
+      resetLogout();
     }
   }
 
