@@ -13,7 +13,6 @@ export const App = () => {
   const [notes, setNotes] = useState([]);
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState('Loading');
-  const [hidden, setHidden] = useState(null);
 
   window.addEventListener('load', () => {
     setTimeout(() => {
@@ -80,7 +79,6 @@ export const App = () => {
     }
   }
 
-<<<<<<< HEAD
   const handleLoginSubmit = async (username, password) => {
     try {
       const user = await loginRequest.login({ username, password });
@@ -93,17 +91,6 @@ export const App = () => {
     }
   }
 
-  const handleHiddenClick = () => { 
-    console.log('handleHiddenClick');
-    if (hidden) {
-      setHidden(false);
-    } else {
-      setHidden(true);
-    }
-  }
-
-=======
->>>>>>> refs/remotes/origin/master
   return (
     <div className="App">
       <Header user={user} handleSetUser={handleSetUser} />
