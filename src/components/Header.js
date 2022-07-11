@@ -1,5 +1,5 @@
 export const Header = (headers) => { 
-  const {user, handleSetUser} = headers;
+  const {user, handleLogout} = headers;
 
   return (
     <div className="HeaderBar">
@@ -8,7 +8,7 @@ export const Header = (headers) => {
         {user ? (
           <span
             className='material-symbols-outlined LogOut'
-            onClick={()=>handleSetUser()}
+            onClick={()=>handleLogout()}
           >logout</span>
         ) : ''}
       </div>

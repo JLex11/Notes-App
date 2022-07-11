@@ -59,7 +59,6 @@ export const App = () => {
   };
 
   const handleUpdateNote = async (toUpdateNote) => {
-    console.log({ toUpdateNote });
     try {
       await notesRequest.update({
         id: toUpdateNote.id,
