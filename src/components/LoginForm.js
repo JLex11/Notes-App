@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "./FormButton";
+import { Button } from "./ButtonForm";
 
 export const LoginForm = ({handleLoginSubmit}) => {
   const [username, setUsername] = useState('');
