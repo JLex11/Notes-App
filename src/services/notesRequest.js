@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3000/notes';
+const baseUrl = 'http://localhost:3001/notes';
 
 const notesRequest = {};
 
@@ -33,6 +33,20 @@ notesRequest.delete = async ({id}) => {
     headers: {
       'Authorization': token
     }
+  });
+
+  const response = await request;
+  return await response.json();
+}
+
+notesRequest.update = async ({ id, note }) => {
+  const request = fetch(`${baseUrl}/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': token
+    },
+    body: JSON.stringify(note)
   });
 
   const response = await request;

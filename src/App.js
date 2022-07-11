@@ -23,8 +23,11 @@ export const App = () => {
   });
 
   useEffect(() => {
+    console.log('useEffect');
     notesRequest.getAll().then(setNotes);
   }, []);
+
+  console.log({ notes });
 
   useEffect(() => {
     const loggedUserJSON = localStorage.getItem('loggedNoteAppUser');
@@ -50,15 +53,19 @@ export const App = () => {
     }
   };
 
-  const handleLoginSubmit = async (username, password) => {
+  const handleUpdateNote = async (toUpdateNote) => {
+    console.log({ toUpdateNote });
     try {
-      const user = await loginRequest.login({ username, password });
-      localStorage.setItem('loggedNoteAppUser', JSON.stringify(user));
-      notesRequest.setToken(user.token);
-      setUser(user);
+      await notesRequest.update({
+        id: toUpdateNote.id,
+        note: {
+          content: toUpdateNote.newContent,
+          important: toUpdateNote.newImportant
+        }
+      });
+      await notesRequest.getAll().then(setNotes);
     } catch {
-      setMessage('Error al iniciar sesión');
-      setTimeout(() => setMessage(null), 3000);
+      setMessage('Note update failed');
     }
   }
 
@@ -71,6 +78,18 @@ export const App = () => {
       setTimeout(() => { 
         setMessage(null);
       }, 3000);
+    }
+  }
+
+  const handleLoginSubmit = async (username, password) => {
+    try {
+      const user = await loginRequest.login({ username, password });
+      localStorage.setItem('loggedNoteAppUser', JSON.stringify(user));
+      notesRequest.setToken(user.token);
+      setUser(user);
+    } catch {
+      setMessage('Error al iniciar sesión');
+      setTimeout(() => setMessage(null), 3000);
     }
   }
 
@@ -112,6 +131,7 @@ export const App = () => {
             date={note.date}
             important={note.important}
             handleDeleteNote={handleDeleteNote}
+            handleUpdateNote={handleUpdateNote}
             timeTransition={'0.' + i + 's'}
             user={user}
           />

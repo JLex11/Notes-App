@@ -248,16 +248,16 @@ b::first-letter {
   transition: background 0.3s ease-in-out, transform 0.1s ease-in-out;
 }
 
-.HeaderNote .Delete span:hover {
+.HeaderNote .ActionButton span:hover {
   cursor: pointer;
 }
 
-.i-true .Delete span:hover {
+.i-true .ActionButton span:hover {
   background: white;
   color: black;
 }
 
-.i-false .Delete span:hover {
+.i-false .ActionButton span:hover {
   background: black;
   color: white;
 }
@@ -267,6 +267,22 @@ b::first-letter {
   height: 100%;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.NoteBody b {
+  font-size: 13pt;
+}
+
+.NoteBody input[type="checkbox"] {
+  display:none;
+}
+
+.NoteBody .SaveButton:hover {
+  cursor: pointer;
+  background: white;
+  color: black;
 }
 
 @media (prefers-color-scheme: dark) {
