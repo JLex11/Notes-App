@@ -12,8 +12,8 @@ import notesRequest from './services/notesRequest';
 export const App = () => {
   const [notes, setNotes] = useState([]);
   const [user, setUser] = useState(null);
-  const [message, setMessage] = useState('Loading');
-
+  const [message, setMessage] = useState({ msg: 'Loading', type: 'loading' });
+  
   window.addEventListener('load', () => {
     setTimeout(() => {
       setMessage('');
@@ -21,33 +21,40 @@ export const App = () => {
   });
 
   useEffect(() => {
-    console.log('useEffect');
     notesRequest.getAll().then(setNotes);
   }, []);
-
-  console.log({ notes });
 
   useEffect(() => {
     const loggedUserJSON = localStorage.getItem('loggedNoteAppUser');
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
-      setUser(user);
-      notesRequest.setToken(user.token);
+      if (user && user.token) {
+        setUser(user);
+        notesRequest.setToken(user.token);
+      } else {
+        handleLogout();
+      }
     }
   }, []);
 
-  const handleSetUser = () => {
+  const handleResetMessage = () => {
+    setMessage(null);
+  }
+
+  const handleLogout = () => {
     setUser(null);
     localStorage.removeItem('loggedNoteAppUser');
     notesRequest.setToken(null);
+    setMessage({ msg: 'Logged out', type: 'info' });
   }
 
   const addNote = async (toAddNote) => {
     try {
       const addedNote = await notesRequest.create({ note: toAddNote });
       setNotes(notes.concat(addedNote));
+      setMessage({ msg: 'Note added', type: 'success' });
     } catch {
-      setMessage('Note creation failed');
+      setMessage({ msg: 'Note creation failed', type: 'error' });
     }
   };
 
@@ -61,9 +68,10 @@ export const App = () => {
           important: toUpdateNote.newImportant
         }
       });
+      setMessage({msg: 'Note updated', type: 'success'});
       await notesRequest.getAll().then(setNotes);
     } catch {
-      setMessage('Note update failed');
+      setMessage({ msg: 'Note update failed', type: 'error' });
     }
   }
 
@@ -71,11 +79,9 @@ export const App = () => {
     try {
       await notesRequest.delete({ id });
       setNotes(notes.filter(note => note.id !== id));
+      setMessage({ msg: 'Note deleted', type: 'success' });
     } catch {
-      setMessage('Note deletion failed');
-      setTimeout(() => { 
-        setMessage(null);
-      }, 3000);
+      setMessage({msg: 'Note deletion failed',type: 'info'});
     }
   }
 
@@ -85,18 +91,28 @@ export const App = () => {
       localStorage.setItem('loggedNoteAppUser', JSON.stringify(user));
       notesRequest.setToken(user.token);
       setUser(user);
-    } catch {
-      setMessage('Error al iniciar sesión');
-      setTimeout(() => setMessage(null), 3000);
+      setMessage({msg: 'Login successful', type: 'success'});
+    } catch (error) {
+      setMessage({ msg: 'Error al iniciar sesión', type: 'error'});
+      handleLogout();
     }
   }
 
   return (
     <div className="App">
-      <Header user={user} handleSetUser={handleSetUser} />
+      <Header user={user} handleLogout={handleLogout} />
       {message ?
-        <Notification message={message}>
-          <TailSpin	color="white" height={30} width={50} />
+        <Notification
+          message={message.msg}
+          type={message.type}
+          handleResetMessage={handleResetMessage}>
+          {message.type === 'loading' &&
+            <TailSpin
+                color="white"
+                height={30}
+                width={50}
+            />
+          }
         </Notification>
         : null}
       {!user ? (

@@ -11,9 +11,11 @@ loginRequest.login = async credencials => {
     body: JSON.stringify(credencials)
   });
 
-  return request.json()
-    .then(response => response)
-    .catch(error => error);
+  const user = await request.json();
+  if (user && user.error) {
+    throw new Error(user.error);
+  }
+  return user;
 }
 
 export default loginRequest;

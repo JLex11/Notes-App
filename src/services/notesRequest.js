@@ -40,6 +40,7 @@ notesRequest.delete = async ({id}) => {
 }
 
 notesRequest.update = async ({ id, note }) => {
+  console.log({token});
   const request = fetch(`${baseUrl}/${id}`, {
     method: 'PUT',
     headers: {
