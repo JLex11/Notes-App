@@ -1,7 +1,6 @@
 import 'material-symbols';
 import { useEffect, useState } from 'react';
 import { TailSpin } from 'react-loader-spinner';
-import { ButtonHidden } from './components/ButtonHidden';
 import { Header } from './components/Header';
 import { LoginForm } from './components/LoginForm';
 import { Note } from './components/Note';
@@ -81,6 +80,7 @@ export const App = () => {
     }
   }
 
+<<<<<<< HEAD
   const handleLoginSubmit = async (username, password) => {
     try {
       const user = await loginRequest.login({ username, password });
@@ -102,6 +102,8 @@ export const App = () => {
     }
   }
 
+=======
+>>>>>>> refs/remotes/origin/master
   return (
     <div className="App">
       <Header user={user} handleSetUser={handleSetUser} />
@@ -111,15 +113,9 @@ export const App = () => {
         </Notification>
         : null}
       {!user ? (
-        <LoginForm
-          handleLoginSubmit={handleLoginSubmit}
-        />
+        <LoginForm handleLoginSubmit={handleLoginSubmit} />
       ) : (
-        <NoteForm addNote={addNote} >
-          <ButtonHidden handleHiddenClick={handleHiddenClick} >
-            <span className='material-symbols-outlined'>visibility</span>
-          </ButtonHidden>
-        </NoteForm>
+        <NoteForm addNote={addNote} />
       )}
 
       <div className="Notes">
