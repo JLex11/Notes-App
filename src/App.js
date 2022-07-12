@@ -15,9 +15,7 @@ export const App = () => {
   const [message, setMessage] = useState({ msg: 'Loading', type: 'loading' });
   
   window.addEventListener('load', () => {
-    setTimeout(() => {
-      setMessage('');
-    }, 1000);
+    setTimeout(() => setMessage(''), 1000);
   });
 
   useEffect(() => {
@@ -31,15 +29,11 @@ export const App = () => {
       if (user && user.token) {
         setUser(user);
         notesRequest.setToken(user.token);
-      } else {
-        setUser(null);
-      }
+      } else setUser(null);
     }
   }, []);
 
-  const handleResetMessage = () => {
-    setMessage(null);
-  };
+  const handleResetMessage = () => setMessage(null);
 
   const resetLogout = () => {
     setUser(null);
@@ -104,7 +98,8 @@ export const App = () => {
   return (
     <div className="App">
       <Header user={user} handleLogout={handleLogout} />
-      {message ?
+      {
+        message ?
         <Notification
           message={message.msg}
           type={message.type}
@@ -117,27 +112,25 @@ export const App = () => {
             />
           }
         </Notification>
-        : null}
-      {!user ? (
-        <LoginForm handleLoginSubmit={handleLoginSubmit} />
-      ) : (
-        <NoteForm addNote={addNote} />
-      )}
-
+        : null
+      }
+      {
+        !user ? (<LoginForm handleLoginSubmit={handleLoginSubmit} />)
+        : (<NoteForm addNote={addNote} />)
+      }
       <div className="Notes">
-        {notes.map((note, i) =>
-          <Note
-            key={note.id}
-            id={note.id}
-            content={note.content}
-            date={note.date}
-            important={note.important}
-            handleDeleteNote={handleDeleteNote}
-            handleUpdateNote={handleUpdateNote}
-            timeTransition={'0.' + i + 's'}
-            user={user}
-          />
-        )}
+        {
+          notes.map((note, i) =>
+            <Note
+              key={note.id}
+              note={note}
+              handleDeleteNote={handleDeleteNote}
+              handleUpdateNote={handleUpdateNote}
+              timeTransition={'0.' + i + 's'}
+              user={user}
+            />
+          )
+        }
       </div>
     </div>
   );

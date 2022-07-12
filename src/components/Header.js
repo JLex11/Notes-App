@@ -1,3 +1,6 @@
+import { Dropdown } from './Dropdown';
+import { NoteActionButton } from './NoteActionButton';
+
 export const Header = (headers) => {
   const {user, handleLogout} = headers;
 
@@ -6,10 +9,17 @@ export const Header = (headers) => {
       <div></div>
       <div>
         {user ? (
-          <span
-            className='material-symbols-outlined LogOut'
-            onClick={() => handleLogout()}
-          >logout</span>
+          <>
+            <div className='HeaderUserOptions'>
+              <span className='material-symbols-outlined'>account_circle</span>
+              <span>{user.name}</span>
+              <Dropdown user={user}>
+                <NoteActionButton label={'Logout'} handleClick={() => handleLogout()}>
+                  <span className='material-symbols-outlined'>logout</span>
+                </NoteActionButton>
+              </Dropdown>
+            </div>
+          </>
         ) : ''}
       </div>
     </div>
