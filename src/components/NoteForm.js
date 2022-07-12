@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { Button } from "./ButtonForm";
-import { ImportantCheckbox } from "./ImportantCheckbox";
+import { useState } from 'react';
+import { Button } from './ButtonForm';
+import { ImportantCheckbox } from './ImportantCheckbox';
 
-export const NoteForm = ({addNote}) => { 
+export const NoteForm = ({addNote}) => {
   const [newNote, setNewNote] = useState('');
   const [newImportant, setNewImportant] = useState(false);
 
-  const handleChange = e => { 
+  const handleChange = e => {
     setNewNote(e.target.value);
-  }
+  };
 
-  const handleSubmit = e => { 
+  const handleSubmit = e => {
     e.preventDefault();
     
     if (newNote.trim().length > 0) {
@@ -50,5 +50,5 @@ export const NoteForm = ({addNote}) => {
         <span className="material-symbols-outlined">note_add</span>
       </Button>
     </form>
-  )
+  );
 };

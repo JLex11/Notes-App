@@ -2,7 +2,7 @@ const baseUrl = 'http://localhost:3001/login';
 
 const loginRequest = {};
 
-loginRequest.login = async credencials => { 
+loginRequest.login = async credencials => {
   const request = await fetch(baseUrl, {
     method: 'POST',
     headers: {
@@ -16,6 +16,6 @@ loginRequest.login = async credencials => {
     throw new Error(user.error);
   }
   return user;
-}
+};
 
 export default loginRequest;

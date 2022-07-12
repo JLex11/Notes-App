@@ -32,25 +32,25 @@ export const App = () => {
         setUser(user);
         notesRequest.setToken(user.token);
       } else {
-        handleLogout();
+        setUser(null);
       }
     }
   }, []);
 
   const handleResetMessage = () => {
     setMessage(null);
-  }
+  };
 
-  const resetLogout = () => { 
+  const resetLogout = () => {
     setUser(null);
     localStorage.removeItem('loggedNoteAppUser');
     notesRequest.setToken(null);
-  }
+  };
 
   const handleLogout = () => {
     resetLogout();
     setMessage({ msg: 'Logged out', type: 'info' });
-  }
+  };
 
   const addNote = async (toAddNote) => {
     try {
@@ -76,7 +76,7 @@ export const App = () => {
     } catch {
       setMessage({ msg: 'Note update failed', type: 'error' });
     }
-  }
+  };
 
   const handleDeleteNote = async id => {
     try {
@@ -86,7 +86,7 @@ export const App = () => {
     } catch {
       setMessage({msg: 'Note deletion failed',type: 'info'});
     }
-  }
+  };
 
   const handleLoginSubmit = async (username, password) => {
     try {
@@ -99,7 +99,7 @@ export const App = () => {
       setMessage({ msg: 'User or password invalid', type: 'error'});
       resetLogout();
     }
-  }
+  };
 
   return (
     <div className="App">
@@ -113,7 +113,7 @@ export const App = () => {
             <TailSpin
                 color="white"
                 height={30}
-                width={50}
+                width={60}
             />
           }
         </Notification>

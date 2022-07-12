@@ -5,10 +5,20 @@ import { NoteActionButton } from './NoteActionButton';
 
 import { useState } from 'react';
 import { ImportantCheckbox } from './ImportantCheckbox';
+import { TextArea } from './TextArea';
 moment.locale('es');
 
 export const Note = note => {
-  const { id, content, date, important, handleDeleteNote, handleUpdateNote, timeTransition, user } = note;
+  const {
+    id,
+    content,
+    date,
+    important,
+    handleDeleteNote,
+    handleUpdateNote,
+    timeTransition,
+    user,
+  } = note;
   const dateFormatted = moment(date).startOf('minute').fromNow();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -57,7 +67,10 @@ export const Note = note => {
   };
 
   return (
-    <div className={`Note i-${important}`} style={customStyles}>
+    <div
+      className={`Note i-${important} ${isEditing && 'NoteEditing'}`}
+      style={customStyles}
+    >
       <div className="HeaderNote">
         <div className="Date">
           <span className="material-symbols-outlined">history</span>
@@ -66,10 +79,14 @@ export const Note = note => {
         {user ? (
           <div className="ActionButtons">
             <NoteActionButton handleClick={handleDelete}>
-              <span className="material-symbols-outlined">delete</span>
+              <span className="material-symbols-outlined">
+                delete
+              </span>
             </NoteActionButton>
             <NoteActionButton handleClick={handleEditNote}>
-              <span className="material-symbols-outlined">{!isEditing ? 'edit' :  'undo'}</span>
+              <span className="material-symbols-outlined">
+                {!isEditing ? 'edit' : 'undo'}
+              </span>
             </NoteActionButton>
           </div>
         ) : null}
@@ -77,10 +94,9 @@ export const Note = note => {
       <div className="NoteBody">
         {isEditing ? (
           <>
-            <textarea
-              className="EditingTextarea"
-              value={newContent}
-              onChange={handleContentChange}
+            <TextArea
+              newContent={newContent}
+              handleContentChange={handleContentChange}
             />
             <div>
               <ImportantCheckbox
@@ -90,7 +106,8 @@ export const Note = note => {
               />
               <span
                 className="material-symbols-outlined SaveButton"
-                onClick={handleUpdate}>
+                onClick={handleUpdate}
+              >
                 save
               </span>
             </div>

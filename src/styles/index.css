@@ -10,8 +10,9 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif; */
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -70,7 +71,6 @@ span.LogOut:hover {
   left: -100%;
   z-index: 1000;
   animation: aparecerNotification 0.5s forwards;
-  background: linear-gradient(to bottom, #32d312, #29c509);
 }
 
 @keyframes aparecerNotification {
@@ -218,6 +218,17 @@ b::first-letter {
 
 .Note:hover {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.Note.NoteEditing {
+  z-index: 2;
+  top: 20px;
+  bottom: 20px;
+  position: sticky;
+  border: 2px solid rgb(0, 112, 204);
+}
+.Note.NoteEditing:hover {
+  z-index: 3;
 }
 
 .Note p {

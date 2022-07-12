@@ -30,10 +30,10 @@ export const Notification = ({ message, type, handleResetMessage, children }) =>
       background: 'linear-gradient(to bottom, #d8d8d8, #c9c9c9)',
       color: '#000'
     }
-  }
+  };
 
   const { background, color, icon } = colors[type] || colors.default;
-  const style = { background, color }
+  const style = { background, color };
   
   setTimeout(() => {
     handleResetMessage();
@@ -47,5 +47,5 @@ export const Notification = ({ message, type, handleResetMessage, children }) =>
         : <span className="material-symbols-outlined">{icon}</span>}
       {children}
     </div>
-  )
+  );
 };

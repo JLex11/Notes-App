@@ -1,4 +1,4 @@
-export const Header = (headers) => { 
+export const Header = (headers) => {
   const {user, handleLogout} = headers;
 
   return (
@@ -8,10 +8,10 @@ export const Header = (headers) => {
         {user ? (
           <span
             className='material-symbols-outlined LogOut'
-            onClick={()=>handleLogout()}
+            onClick={() => handleLogout()}
           >logout</span>
         ) : ''}
       </div>
     </div>
-  )
+  );
 };

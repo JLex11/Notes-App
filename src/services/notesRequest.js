@@ -4,11 +4,11 @@ const notesRequest = {};
 
 let token = null;
 
-notesRequest.setToken = newToken => { 
+notesRequest.setToken = newToken => {
   token = `Bearer ${newToken}`;
-}
+};
 
-notesRequest.getAll = async () => { 
+notesRequest.getAll = async () => {
   const response = await fetch(baseUrl);
   return await response.json();
 };
@@ -27,7 +27,7 @@ notesRequest.create = async ({note}) => {
   return await response.json();
 };
 
-notesRequest.delete = async ({id}) => { 
+notesRequest.delete = async ({id}) => {
   const request = fetch(`${baseUrl}/${id}`, {
     method: 'DELETE',
     headers: {
@@ -37,7 +37,7 @@ notesRequest.delete = async ({id}) => {
 
   const response = await request;
   return await response.json();
-}
+};
 
 notesRequest.update = async ({ id, note }) => {
   const request = fetch(`${baseUrl}/${id}`, {
@@ -51,6 +51,6 @@ notesRequest.update = async ({ id, note }) => {
 
   const response = await request;
   return await response.json();
-}
+};
 
 export default notesRequest;
