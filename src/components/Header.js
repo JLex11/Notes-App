@@ -1,27 +1,48 @@
+import { useState } from 'react';
+import { ActionButton } from './ActionButton';
 import { Dropdown } from './Dropdown';
-import { NoteActionButton } from './NoteActionButton';
 
-export const Header = (headers) => {
-  const {user, handleLogout} = headers;
+export const Header = headers => {
+  const { user, handleLogout } = headers;
+  const [ dropdown, setDropdown ] = useState(false);
+
+  const handleDropdown = () => {
+    if (dropdown) setDropdown(false);
+    else setDropdown(true);
+  };
+
+  const handleLogoutClick = () => {
+    setDropdown(false);
+    handleLogout();
+  };
 
   return (
-    <div className="HeaderBar">
-      <div></div>
-      <div>
-        {user ? (
-          <>
-            <div className='HeaderUserOptions'>
+    <div className='HeaderBar'>
+      {user ? (
+        <>
+          <div>
+            <ActionButton label={user.name}>
               <span className='material-symbols-outlined'>account_circle</span>
-              <span>{user.name}</span>
-              <Dropdown user={user}>
-                <NoteActionButton label={'Logout'} handleClick={() => handleLogout()}>
+            </ActionButton>
+          </div>
+          <div>
+            <div className='HeaderUserOptions'>
+              <Dropdown
+                user={user}
+                icon={'more_vert'}
+                dropdown={dropdown}
+                handleDropdown={handleDropdown}
+              >
+                <ActionButton label={'Logout'} handleClick={handleLogoutClick}>
                   <span className='material-symbols-outlined'>logout</span>
-                </NoteActionButton>
+                </ActionButton>
               </Dropdown>
             </div>
-          </>
-        ) : ''}
-      </div>
+          </div>
+        </>
+      ) : (
+        ''
+      )}
     </div>
   );
 };

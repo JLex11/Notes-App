@@ -10,10 +10,10 @@ import loginRequest from './services/loginRequest';
 import notesRequest from './services/notesRequest';
 
 export const App = () => {
-  const [notes, setNotes] = useState([]);
-  const [user, setUser] = useState(null);
-  const [message, setMessage] = useState({ msg: 'Loading', type: 'loading' });
-  
+  const [ notes, setNotes ] = useState([]);
+  const [ user, setUser ] = useState(null);
+  const [ message, setMessage ] = useState({ msg: 'Loading', type: 'loading' });
+
   window.addEventListener('load', () => {
     setTimeout(() => setMessage(''), 1000);
   });
@@ -46,7 +46,7 @@ export const App = () => {
     setMessage({ msg: 'Logged out', type: 'info' });
   };
 
-  const addNote = async (toAddNote) => {
+  const addNote = async toAddNote => {
     try {
       const addedNote = await notesRequest.create({ note: toAddNote });
       setNotes(notes.concat(addedNote));
@@ -56,17 +56,17 @@ export const App = () => {
     }
   };
 
-  const handleUpdateNote = async (toUpdateNote) => {
+  const handleUpdateNote = async toUpdateNote => {
     try {
       await notesRequest.update({
         id: toUpdateNote.id,
         note: {
           content: toUpdateNote.newContent,
-          important: toUpdateNote.newImportant
-        }
+          important: toUpdateNote.newImportant,
+        },
       });
-      setMessage({msg: 'Note updated', type: 'success'});
       await notesRequest.getAll().then(setNotes);
+      setMessage({ msg: 'Note updated', type: 'success' });
     } catch {
       setMessage({ msg: 'Note update failed', type: 'error' });
     }
@@ -78,7 +78,7 @@ export const App = () => {
       setNotes(notes.filter(note => note.id !== id));
       setMessage({ msg: 'Note deleted', type: 'success' });
     } catch {
-      setMessage({msg: 'Note deletion failed',type: 'info'});
+      setMessage({ msg: 'Note deletion failed', type: 'info' });
     }
   };
 
@@ -88,49 +88,61 @@ export const App = () => {
       localStorage.setItem('loggedNoteAppUser', JSON.stringify(user));
       notesRequest.setToken(user.token);
       setUser(user);
-      setMessage({msg: 'Login successful', type: 'success'});
+      setMessage({ msg: 'Login successful', type: 'success' });
     } catch {
-      setMessage({ msg: 'User or password invalid', type: 'error'});
       resetLogout();
+      setMessage({ msg: 'User or password invalid', type: 'error' });
     }
   };
 
   return (
-    <div className="App">
+    <div className='App'>
       <Header user={user} handleLogout={handleLogout} />
-      {
-        message ?
+      {message ? (
         <Notification
           message={message.msg}
           type={message.type}
-          handleResetMessage={handleResetMessage}>
-          {message.type === 'loading' &&
-            <TailSpin
-                color="white"
-                height={30}
-                width={60}
-            />
-          }
+          handleResetMessage={handleResetMessage}
+        >
+          {message.type === 'loading' && (
+            <TailSpin color='white' height={30} width={60} />
+          )}
         </Notification>
-        : null
-      }
-      {
-        !user ? (<LoginForm handleLoginSubmit={handleLoginSubmit} />)
-        : (<NoteForm addNote={addNote} />)
-      }
-      <div className="Notes">
-        {
-          notes.map((note, i) =>
-            <Note
-              key={note.id}
-              note={note}
-              handleDeleteNote={handleDeleteNote}
-              handleUpdateNote={handleUpdateNote}
-              timeTransition={'0.' + i + 's'}
-              user={user}
-            />
-          )
-        }
+      ) : null}
+      {!user ? (
+        <LoginForm handleLoginSubmit={handleLoginSubmit} />
+      ) : (
+        <NoteForm addNote={addNote} />
+      )}
+      <div className='Notes'>
+        {notes.map((note, i) => {
+          if (user) {
+            if (note.user.username === user.username) {
+              return (
+                <Note
+                  key={note.id}
+                  note={note}
+                  handleDeleteNote={handleDeleteNote}
+                  handleUpdateNote={handleUpdateNote}
+                  timeTransition={'0.' + i + 's'}
+                  user={user}
+                />
+              );
+            }
+            return null;
+          } else {
+            return (
+              <Note
+                key={note.id}
+                note={note}
+                handleDeleteNote={handleDeleteNote}
+                handleUpdateNote={handleUpdateNote}
+                timeTransition={'0.' + i + 's'}
+                user={user}
+              />
+            );
+          }
+        })}
       </div>
     </div>
   );

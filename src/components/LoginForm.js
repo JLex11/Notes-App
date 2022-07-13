@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Button } from './ButtonForm';
 
 export const LoginForm = ({handleLoginSubmit}) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [ username, setUsername ] = useState('');
+  const [ password, setPassword ] = useState('');
 
   const handleUsernameChange = e => {
     setUsername(e.target.value);

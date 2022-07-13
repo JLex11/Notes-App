@@ -1,4 +1,4 @@
-export const NoteActionButton = ({ handleClick, label, children }) => {
+export const ActionButton = ({ handleClick, label, children }) => {
   return (
     <div onClick={handleClick} className="ActionButton">
       {children}

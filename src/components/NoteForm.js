@@ -3,8 +3,8 @@ import { Button } from './ButtonForm';
 import { ImportantCheckbox } from './ImportantCheckbox';
 
 export const NoteForm = ({addNote}) => {
-  const [newNote, setNewNote] = useState('');
-  const [newImportant, setNewImportant] = useState(false);
+  const [ newNote, setNewNote ] = useState('');
+  const [ newImportant, setNewImportant ] = useState(false);
 
   const handleChange = e => {
     setNewNote(e.target.value);

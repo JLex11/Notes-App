@@ -1,7 +1,7 @@
 import 'material-symbols';
 import moment from 'moment';
 import 'moment/locale/es';
-import { NoteActionButton } from './NoteActionButton';
+import { ActionButton } from './ActionButton';
 
 import { useState } from 'react';
 import { Dropdown } from './Dropdown';
@@ -14,13 +14,20 @@ export const Note = ({ ...props }) => {
   const { id, content, date, important } = note;
   const { name } = note.user;
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [newContent, setNewContent] = useState(content);
-  const [newImportant, setNewImportant] = useState(important);
+  const [ isEditing, setIsEditing ] = useState(false);
+  const [ newContent, setNewContent ] = useState(content);
+  const [ newImportant, setNewImportant ] = useState(important);
+  const [ dropdown, setDropdown ] = useState(false);
 
   const dateFormatted = moment(date).startOf('minute').fromNow();
 
+  const handleDropdown = () => {
+    if (dropdown) setDropdown(false);
+    else setDropdown(true);
+  };
+
   const handleEditNote = () => {
+    setDropdown(false);
     if (!isEditing) {
       setIsEditing(true);
       setNewContent(content);
@@ -44,7 +51,10 @@ export const Note = ({ ...props }) => {
     setNewImportant('');
   };
 
-  const handleDelete = () => handleDeleteNote(id);
+  const handleDelete = () => {
+    handleDeleteNote(id);
+    setDropdown(false);
+  };
 
   const customStyles = {
     animationDelay: timeTransition,
@@ -55,17 +65,17 @@ export const Note = ({ ...props }) => {
     <div className={`Note i-${important} ${isEditing && 'NoteEditing'}`} style={customStyles}>
       <div className="HeaderNote">
         <div className="Date">
-          <span className='material-symbols-outlined'>history</span>
+          <span className="material-symbols-outlined">history</span>
           <b>{dateFormatted}</b>
         </div>
-        <Dropdown user={user}>
-          <NoteActionButton handleClick={handleEditNote} label={'Edit'}>
-            <span className='material-symbols-outlined'>{!isEditing ? 'edit' : 'undo'}</span>
-          </NoteActionButton>
+        <Dropdown user={user} dropdown={dropdown} handleDropdown={handleDropdown}>
+          <ActionButton handleClick={handleEditNote} label={'Edit'}>
+            <span className="material-symbols-outlined">{!isEditing ? 'edit' : 'undo'}</span>
+          </ActionButton>
           {!isEditing && (
-            <NoteActionButton handleClick={handleDelete} label={'Delete'}>
-              <span className='material-symbols-outlined'>delete</span>
-            </NoteActionButton>
+            <ActionButton handleClick={handleDelete} label={'Delete'}>
+              <span className="material-symbols-outlined">delete</span>
+            </ActionButton>
           )}
         </Dropdown>
       </div>
@@ -74,8 +84,12 @@ export const Note = ({ ...props }) => {
           <>
             <TextArea newContent={newContent} handleContentChange={handleContentChange} />
             <div>
-              <ImportantCheckbox id={id} newImportant={newImportant} handleImportantChange={handleImportantChange} />
-              <span className='material-symbols-outlined SaveButton' onClick={handleUpdate}>
+              <ImportantCheckbox
+                id={id}
+                newImportant={newImportant}
+                handleImportantChange={handleImportantChange}
+              />
+              <span className="material-symbols-outlined SaveButton" onClick={handleUpdate}>
                 save
               </span>
             </div>

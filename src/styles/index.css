@@ -14,6 +14,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
 }
 
 .App {
@@ -21,8 +22,7 @@ body {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  padding: 10px;
-  gap: 25px;
+  gap: 30px;
 }
 
 h1 {
@@ -196,7 +196,7 @@ b::first-letter {
   font-size: 1.3rem;
   border-radius: 15px;
   padding: 10px;
-  box-shadow: 0 0 7px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
   transition: 
     background 0.5s linear,
     color 0.5s linear, 
@@ -229,6 +229,11 @@ b::first-letter {
   z-index: 3;
 }
 
+.Note .material-symbols-outlined {
+  border-radius: 50%;
+  padding: 3px;
+}
+
 .Note p {
   font-size: 12pt;
 }
@@ -239,7 +244,7 @@ b::first-letter {
 }
 
 .i-false {
-  background: linear-gradient(to bottom, #dcdcdc, #c7c7c7);
+  background: linear-gradient(to bottom, #e7e7e7, #dadada);
 }
 
 .HeaderNote {
@@ -252,19 +257,21 @@ b::first-letter {
   font-size: 12pt;
 }
 
-.HeaderNote > div {
+.HeaderNote > .Date {
   display: flex;
   align-items: center;
   gap: 3px;
   font-size: 10pt;
 }
 
-.HeaderNote > .material-symbols-outlined {
+.Note .material-symbols-outlined,
+.DropdownIconLauncher {
   border-radius: 50%;
   transition: 
     transform 0.3s ease-in-out, 
     background 0.3s ease-in-out, 
     color 0.3s ease-in-out;
+  padding: 5px;
 }
 
 .HeaderNote > .material-symbols-outlined:hover {
@@ -280,7 +287,7 @@ b::first-letter {
   gap: 10px;
 }
 
-.HeaderUserOptions .material-symbols-outlined:hover {
+.DropdownIconLauncher:hover {
   cursor: pointer;
   background: rgb(0, 0, 0, 0.1);
   border-radius: 50%;
@@ -295,11 +302,12 @@ b::first-letter {
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: 50px;
+  top: 40px;
   right: 15px;
   gap: 3px;
   font-size: 10pt;
-  background: white;
+  background: #ffffffcb;
+  backdrop-filter: blur(5px);
   color: black;
   border-radius: 10px;
   padding: 5px;
@@ -329,7 +337,7 @@ b::first-letter {
 
 .ActionButton:hover {
   cursor: pointer;
-  background: rgba(0, 0, 0, 0.15);
+  background: rgb(0, 0, 0, 0.1);
 }
 
 .NoteBody {
@@ -338,7 +346,7 @@ b::first-letter {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 3px;
+  gap: 5px;
 }
 
 .NoteBody h3 {
@@ -390,8 +398,8 @@ b::first-letter {
 
 @media (prefers-color-scheme: dark) {
   body {
-    background: linear-gradient(to bottom right, #181b27, #0b0d18);
-    color: white;
+    background: linear-gradient(to top, #1a1d2c, #0b0d1a);
+    color: #c2c2c2;
   }
 
   .LoginForm {
@@ -422,20 +430,30 @@ b::first-letter {
   }
 
   .i-true {
-    background: linear-gradient(to bottom, #003b63, #002c4a);
+    background: linear-gradient(to bottom, #002b48, #00101c);
+    color: inherit;
   }
 
   .i-false {
-    background: linear-gradient(to bottom, #232323, #131313);
+    background: linear-gradient(to bottom, #191919, #0d0d0d);
+    color: inherit;
   }
 
   .DropdownMenu {
-    background: #002238;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
+    background: #002238d5;
+    box-shadow: 0 0 20px rgb(0 0 0 / 35%);
+    color: inherit;
+  }
+
+  .i-false .DropdownMenu {
+    background: #232323da;
   }
   
-  .HeaderNote .ActionButton:hover {
+  .i-true .ActionButton:hover {
     background: #002c4a;
+  }
+  .i-false .ActionButton:hover {
+    background: #000000b0;
   }
 }
 
