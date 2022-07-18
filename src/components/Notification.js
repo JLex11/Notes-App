@@ -2,7 +2,7 @@ export const Notification = ({ message, type, handleResetMessage, children }) =>
   const colors = {
     success: {
       icon: 'done',
-      background: 'linear-gradient(to bottom, #32d312, #29c509)',
+      background: 'linear-gradient(to bottom, #2cb710, #29c30a)',
       color: '#fff'
     },
     error: {

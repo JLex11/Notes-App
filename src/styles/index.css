@@ -112,8 +112,8 @@ span.LogOut:hover {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 20px 40px;
   margin-bottom: 20px;
+  padding: 20px;
   gap: 10px;
   transform: scale(0);
   opacity: 0;
@@ -129,6 +129,7 @@ span.LogOut:hover {
 
 .Form input,
 .Form button {
+  max-width: 100%;
   font-size: 1.5rem;
   border: 1px solid #c4c4c4;
   border-radius: 15px;
@@ -196,12 +197,18 @@ b::first-letter {
   font-size: 1.3rem;
   border-radius: 15px;
   padding: 10px;
+  width: 100%;
+  height: 100%;
   box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
   transition: 
-    background 0.5s linear,
-    color 0.5s linear, 
-    box-shadow 0.3s ease-in-out;
-  transform: translateY(100px);
+    background 0.5s ease-in-out,
+    color 0.5s ease-in-out,
+    box-shadow 0.5s ease-in-out;
+  position: relative;
+}
+
+.Note.isAnimation {
+  transform: translateY(100%);
   opacity: 0;
   animation: 
     turnUpNote 0.3s ease-in-out forwards;
@@ -219,14 +226,15 @@ b::first-letter {
 }
 
 .Note.NoteEditing {
-  z-index: 2;
-  top: 20px;
-  bottom: 20px;
-  position: sticky;
-  border: 2px solid rgb(0, 112, 204);
-}
-.Note.NoteEditing:hover {
   z-index: 3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  height: 60%;
+  width: 60%;
 }
 
 .Note .material-symbols-outlined {
@@ -302,11 +310,11 @@ b::first-letter {
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: 40px;
-  right: 15px;
-  gap: 3px;
+  top: 45px;
+  right: 10px;
+  gap: 5px;
   font-size: 10pt;
-  background: #ffffffcb;
+  background: #ffffffb3;
   backdrop-filter: blur(5px);
   color: black;
   border-radius: 10px;
@@ -372,8 +380,8 @@ b::first-letter {
   display:none;
 }
 
-.NoteBody textarea {
-  max-width: 100%;
+/* .NoteBody  */textarea {
+  resize: none;
   width: 100%;
   height: 100%;
   border: 2px solid transparent;
@@ -381,12 +389,11 @@ b::first-letter {
   font-size: 12pt;
   font-family: inherit;
   background: white;
-  color: black;
   padding: 5px;
   overflow-x: hidden;
 }
 
-.NoteBody textarea:focus-visible {
+/* .NoteBody */ textarea:focus-visible {
   outline: 2px solid rgb(0, 112, 204);
 }
 
@@ -439,14 +446,19 @@ b::first-letter {
     color: inherit;
   }
 
+  .NoteBody textarea {
+    background: #ffffff1a;
+    color: #e0e0e0;
+  }
+
   .DropdownMenu {
-    background: #002238d5;
+    background: #002238cd;
     box-shadow: 0 0 20px rgb(0 0 0 / 35%);
     color: inherit;
   }
 
   .i-false .DropdownMenu {
-    background: #232323da;
+    background: #232323bb;
   }
   
   .i-true .ActionButton:hover {

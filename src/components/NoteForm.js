@@ -5,7 +5,7 @@ import { ImportantCheckbox } from './ImportantCheckbox';
 export const NoteForm = ({addNote}) => {
   const [ newNote, setNewNote ] = useState('');
   const [ newImportant, setNewImportant ] = useState(false);
-
+  
   const handleChange = e => {
     setNewNote(e.target.value);
   };
@@ -22,6 +22,7 @@ export const NoteForm = ({addNote}) => {
       addNote(toAddNote);
       setNewNote('');
       setNewImportant(false);
+      
       window.scrollTo({
         top: document.body.offsetHeight,
         behavior: 'smooth'
@@ -38,9 +39,11 @@ export const NoteForm = ({addNote}) => {
       <h2>Notes</h2>
       <input
         type="text"
+        className='FormInputAutoExpand'
         onChange={handleChange}
         value={newNote}
         placeholder="Enter a new note"
+        size={newNote.length}
       />
       <ImportantCheckbox
         newImportant={newImportant}

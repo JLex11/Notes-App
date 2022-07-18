@@ -14,12 +14,16 @@ export const App = () => {
   const [ user, setUser ] = useState(null);
   const [ message, setMessage ] = useState({ msg: 'Loading', type: 'loading' });
 
-  window.addEventListener('load', () => {
+  /* window.addEventListener('load', () => {
     setTimeout(() => setMessage(''), 1000);
-  });
+  }); */
 
   useEffect(() => {
-    notesRequest.getAll().then(setNotes);
+    setMessage({ msg: 'Loading', type: 'loading' });
+    notesRequest.getAll().then(res => {
+      setNotes(res);
+      setTimeout(() => setMessage({ msg: 'Notes loaded', type: 'success' }), 1000);
+    });
   }, []);
 
   useEffect(() => {
@@ -105,7 +109,7 @@ export const App = () => {
           handleResetMessage={handleResetMessage}
         >
           {message.type === 'loading' && (
-            <TailSpin color='white' height={30} width={60} />
+            <TailSpin color='white' height={25} width={30} />
           )}
         </Notification>
       ) : null}
@@ -115,34 +119,16 @@ export const App = () => {
         <NoteForm addNote={addNote} />
       )}
       <div className='Notes'>
-        {notes.map((note, i) => {
-          if (user) {
-            if (note.user.username === user.username) {
-              return (
-                <Note
-                  key={note.id}
-                  note={note}
-                  handleDeleteNote={handleDeleteNote}
-                  handleUpdateNote={handleUpdateNote}
-                  timeTransition={'0.' + i + 's'}
-                  user={user}
-                />
-              );
-            }
-            return null;
-          } else {
-            return (
-              <Note
-                key={note.id}
-                note={note}
-                handleDeleteNote={handleDeleteNote}
-                handleUpdateNote={handleUpdateNote}
-                timeTransition={'0.' + i + 's'}
-                user={user}
-              />
-            );
-          }
-        })}
+        {notes.map((note, i) =>
+          <Note
+            key={note.id}
+            note={note}
+            handleDeleteNote={handleDeleteNote}
+            handleUpdateNote={handleUpdateNote}
+            timeTransition={'0.' + i + 's'}
+            user={user}
+          />
+        )}
       </div>
     </div>
   );
