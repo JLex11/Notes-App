@@ -36,6 +36,7 @@ notesRequest.delete = async ({id}) => {
   });
 
   const response = await request;
+  console.log({response});
   return await response.json();
 };
 

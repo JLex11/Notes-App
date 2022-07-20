@@ -1,9 +1,15 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addNote } from '../redux/actions/notesActions';
+import { setNotification } from '../redux/actions/notificationsActions';
+import notesRequest from '../services/notesRequest';
 import { Button } from './ButtonForm';
 import { ImportantCheckbox } from './ImportantCheckbox';
 
-export const NoteForm = ({addNote}) => {
+export const NoteForm = () => {
+  const dispatch = useDispatch();
+
   const [ newNote, setNewNote ] = useState('');
   const [ newImportant, setNewImportant ] = useState(false);
   
@@ -20,14 +26,21 @@ export const NoteForm = ({addNote}) => {
         important: newImportant,
       };
 
-      addNote(toAddNote);
-      setNewNote('');
-      setNewImportant(false);
-      
-      window.scrollTo({
-        top: document.body.offsetHeight,
-        behavior: 'smooth'
-      });
+      const addedNote = notesRequest.create({ note: toAddNote });
+      addedNote
+        .then(note => {
+          dispatch(addNote(note));
+          dispatch(setNotification({ msg: 'Note added', type: 'success' }));
+          setNewNote('');
+          setNewImportant(false);
+          window.scrollTo({
+            top: document.body.offsetHeight,
+            behavior: 'smooth'
+          });
+        })
+        .catch(() => {
+          dispatch(setNotification({ msg: 'Error adding note', type: 'error' }));
+        });
     }
   };
   

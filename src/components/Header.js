@@ -1,19 +1,26 @@
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetDropdown, setDropdown } from '../redux/actions/dropdownActions';
+import { resetUser } from '../redux/actions/userActions';
+import notesRequest from '../services/notesRequest';
 import { ActionButton } from './ActionButton';
 import { Dropdown } from './Dropdown';
 
-export const Header = headers => {
-  const { user, handleLogout } = headers;
-  const [ dropdown, setDropdown ] = useState(false);
+export const Header = () => {
+  const dispatch = useDispatch();
+
+  const dropdown = useSelector(state => state.dropdown);
+  const user = useSelector(state => state.user);
 
   const handleDropdown = () => {
-    if (dropdown) setDropdown(false);
-    else setDropdown(true);
+    if (dropdown) dispatch(resetDropdown());
+    else dispatch(setDropdown());
   };
 
-  const handleLogoutClick = () => {
-    setDropdown(false);
-    handleLogout();
+  const handleLogout = () => {
+    dispatch(resetDropdown());
+    dispatch(resetUser());
+    localStorage.removeItem('loggedNoteAppUser');
+    notesRequest.setToken(null);
   };
 
   return (
@@ -33,7 +40,7 @@ export const Header = headers => {
                 dropdown={dropdown}
                 handleDropdown={handleDropdown}
               >
-                <ActionButton label={'Logout'} handleClick={handleLogoutClick}>
+                <ActionButton label={'Logout'} handleClick={handleLogout}>
                   <span className='material-symbols-outlined'>logout</span>
                 </ActionButton>
               </Dropdown>

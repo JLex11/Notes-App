@@ -12,9 +12,7 @@ loginRequest.login = async credencials => {
   });
 
   const user = await request.json();
-  if (user && user.error) {
-    throw new Error(user.error);
-  }
+  if (user?.error) throw new Error(user.error);
   return user;
 };
 

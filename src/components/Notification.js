@@ -1,6 +1,11 @@
 import { motion } from 'framer-motion';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetNotification } from '../redux/actions/notificationsActions';
 
-export const Notification = ({ message, type, handleResetMessage, children }) => {
+export const Notification = ({ children }) => {
+  const dispatch = useDispatch();
+  const {message} = useSelector(state => state.notification);
+
   const colors = {
     success: {
       icon: 'done',
@@ -34,38 +39,45 @@ export const Notification = ({ message, type, handleResetMessage, children }) =>
     }
   };
 
-  const { background, color, icon } = colors[type] || colors.default;
+  if (message) {
+    setTimeout(() => {
+      dispatch(resetNotification());
+    }, 3000);
+  }
+
+  const { background, color, icon } = colors[message?.type] || colors.default;
   const style = { background, color };
-  
-  setTimeout(() => {
-    handleResetMessage();
-  }, 3000);
 
   const motionInitial = {
     opacity: 0,
     x: -100,
-    scale: 0.6
+    scaleX: 0.6
   };
+
   const motionAnimate = {
     opacity: 1,
     x: 0,
-    scale: 1,
+    scaleX: 1,
     transition: {
       type: 'spring'
     }
   };
 
   return (
-    <motion.div
-      initial={motionInitial}
-      animate={motionAnimate}
-      className='Notification'
-      style={style}>
-      <p>{message}</p>
-      {icon === ''
-        ? null
-        : <span className="material-symbols-outlined">{icon}</span>}
-      {children}
-    </motion.div>
+    <>
+      {message && (
+        <motion.div
+          initial={motionInitial}
+          animate={motionAnimate}
+          className='Notification'
+          style={style}>
+          <p>{message?.msg}</p>
+          {icon === ''
+            ? null
+            : <span className="material-symbols-outlined">{icon}</span>}
+          {children}
+        </motion.div>
+      )}
+    </>
   );
 };

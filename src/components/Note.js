@@ -60,9 +60,12 @@ export const Note = ({ ...props }) => {
 
   setTimeout(() => setIsAnimation(''), 3000);
 
+  let gridSpan = 'span 0';
+  if (content.length > 120) gridSpan = 'span 2';
+
   const customStyles = {
     animationDelay: timeTransition,
-    gridColumn: content.length > 120 ? 'span 2' : 'span 0',
+    gridColumn: gridSpan,
   };
 
   const noteClassNames = `Note i-${important} ${isEditing && 'NoteEditing'} ${isAnimation}`;

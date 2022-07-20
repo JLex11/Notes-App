@@ -1,22 +1,34 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../redux/actions/notificationsActions';
+import { resetUser, setUser } from '../redux/actions/userActions';
+import loginRequest from '../services/loginRequest';
+import notesRequest from '../services/notesRequest';
 import { Button } from './ButtonForm';
 
-export const LoginForm = ({handleLoginSubmit}) => {
+export const LoginForm = () => {
+  const dispatch = useDispatch();
+
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
 
-  const handleUsernameChange = e => {
-    setUsername(e.target.value);
-  };
-
-  const handleSetPassword = e => {
-    setPassword(e.target.value);
-  };
+  const handleUsernameChange = e => setUsername(e.target.value);
+  const handleSetPassword = e => setPassword(e.target.value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleLoginSubmit(username, password);
+    
+    const user = loginRequest.login({ username, password });
+    user.then(res => {
+      localStorage.setItem('loggedNoteAppUser', JSON.stringify(res));
+      notesRequest.setToken(res.token);
+      dispatch(setUser(res));
+    }).catch(() => {
+      dispatch(setNotification({ msg: 'User or password invalid', type: 'error' }));
+      dispatch(resetUser());
+    });
+    
   };
 
   const motionInitial = {
@@ -55,7 +67,6 @@ export const LoginForm = ({handleLoginSubmit}) => {
         <Button content={'Accept'} disable={!username || !password ? true : false} >
           <span className="material-symbols-outlined">input</span>
         </Button>
-        
       </form>
     </motion.div>
   );
