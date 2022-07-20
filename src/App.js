@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import 'material-symbols';
 import { useEffect, useState } from 'react';
 import { TailSpin } from 'react-loader-spinner';
@@ -13,10 +14,6 @@ export const App = () => {
   const [ notes, setNotes ] = useState([]);
   const [ user, setUser ] = useState(null);
   const [ message, setMessage ] = useState({ msg: 'Loading', type: 'loading' });
-
-  /* window.addEventListener('load', () => {
-    setTimeout(() => setMessage(''), 1000);
-  }); */
 
   useEffect(() => {
     setMessage({ msg: 'Loading', type: 'loading' });
@@ -118,18 +115,18 @@ export const App = () => {
       ) : (
         <NoteForm addNote={addNote} />
       )}
-      <div className='Notes'>
+      <motion.div layout className='Notes'>
         {notes.map((note, i) =>
           <Note
             key={note.id}
             note={note}
             handleDeleteNote={handleDeleteNote}
             handleUpdateNote={handleUpdateNote}
-            timeTransition={'0.' + i + 's'}
+            timeTransition={'0.' + i}
             user={user}
           />
         )}
-      </div>
+      </motion.div>
     </div>
   );
 };

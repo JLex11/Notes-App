@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 export const Notification = ({ message, type, handleResetMessage, children }) => {
   const colors = {
     success: {
@@ -39,13 +41,31 @@ export const Notification = ({ message, type, handleResetMessage, children }) =>
     handleResetMessage();
   }, 3000);
 
+  const motionInitial = {
+    opacity: 0,
+    x: -100,
+    scale: 0.6
+  };
+  const motionAnimate = {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: {
+      type: 'spring'
+    }
+  };
+
   return (
-    <div className='Notification' style={style}>
+    <motion.div
+      initial={motionInitial}
+      animate={motionAnimate}
+      className='Notification'
+      style={style}>
       <p>{message}</p>
       {icon === ''
         ? null
         : <span className="material-symbols-outlined">{icon}</span>}
       {children}
-    </div>
+    </motion.div>
   );
 };

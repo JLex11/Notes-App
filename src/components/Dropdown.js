@@ -1,4 +1,18 @@
+import { motion } from 'framer-motion';
+
 export const Dropdown = ({ user, icon, dropdown, handleDropdown, children }) => {
+  const motionInitial = {
+    opacity: 0,
+    y: -50,
+    scale: 0.5,
+  };
+
+  const motionAnimate = {
+    y: 0,
+    scale: 1,
+    opacity: 1,
+  };
+
   return (
     <>
       {user ? (
@@ -10,9 +24,12 @@ export const Dropdown = ({ user, icon, dropdown, handleDropdown, children }) => 
         </span>
       ) : null}
       {dropdown && (
-        <div className="DropdownMenu">
+        <motion.div
+          initial={motionInitial}
+          animate={motionAnimate}
+          className="DropdownMenu">
           {children}
-        </div>
+        </motion.div>
       )}
     </>
   );

@@ -51,10 +51,6 @@
     "space-in-parens": [
       "error",
       "never"
-    ],
-    "array-bracket-spacing": [
-      "error",
-      "always"
     ]
   }
 }

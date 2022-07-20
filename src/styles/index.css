@@ -15,6 +15,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .App {
@@ -66,15 +67,8 @@ span.LogOut:hover {
   border-radius: 15px;
   position: fixed;
   top: 20px;
-  left: -100%;
+  left: 20px;
   z-index: 1000;
-  animation: turnUpNotification 0.5s forwards;
-}
-
-@keyframes turnUpNotification {
-  100% {
-    left: 20px;
-  }
 }
 
 .Form button.ButtonHidden {
@@ -115,16 +109,6 @@ span.LogOut:hover {
   margin-bottom: 20px;
   padding: 20px;
   gap: 10px;
-  transform: scale(0);
-  opacity: 0;
-  animation: turnUpForm 0.3s ease-in-out forwards;
-}
-
-@keyframes turnUpForm {
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
 }
 
 .Form input,
@@ -193,32 +177,17 @@ b::first-letter {
 
 .Note {
   display: flex;
+  gap: 7px;
   flex-direction: column;
   font-size: 1.3rem;
   border-radius: 15px;
-  padding: 10px;
+  padding: 5px;
   width: 100%;
   height: 100%;
   box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
-  transition: 
-    background 0.5s ease-in-out,
-    color 0.5s ease-in-out,
+  transition: background 0.5s ease-in-out, color 0.5s ease-in-out,
     box-shadow 0.5s ease-in-out;
   position: relative;
-}
-
-.Note.isAnimation {
-  transform: translateY(100%);
-  opacity: 0;
-  animation: 
-    turnUpNote 0.3s ease-in-out forwards;
-}
-
-@keyframes turnUpNote {
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .Note:hover {
@@ -244,6 +213,7 @@ b::first-letter {
 
 .Note p {
   font-size: 12pt;
+  padding: 10px;
 }
 
 .i-true {
@@ -260,7 +230,6 @@ b::first-letter {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
   gap: 5px;
   font-size: 12pt;
 }
@@ -269,15 +238,16 @@ b::first-letter {
   display: flex;
   align-items: center;
   gap: 3px;
-  font-size: 10pt;
+  font-size: 9pt;
 }
 
-.Note .material-symbols-outlined,
-.DropdownIconLauncher {
+.HeaderNote > .Date b {
+  font-weight: 400;
+}
+
+.Note .material-symbols-outlined .DropdownIconLauncher {
   border-radius: 50%;
-  transition: 
-    transform 0.3s ease-in-out, 
-    background 0.3s ease-in-out, 
+  transition: transform 0.3s ease-in-out, background 0.3s ease-in-out,
     color 0.3s ease-in-out;
   padding: 5px;
 }
@@ -314,23 +284,13 @@ b::first-letter {
   right: 10px;
   gap: 5px;
   font-size: 10pt;
-  background: #ffffffb3;
+  background: #ffffffd6;
   backdrop-filter: blur(5px);
   color: black;
   border-radius: 10px;
   padding: 5px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
   z-index: 2;
-  opacity: 0;
-  transform: translateY(-50px);
-  animation: turnUpDropdown 0.3s ease-in-out forwards;
-}
-
-@keyframes turnUpDropdown {
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
 }
 
 .ActionButton {
@@ -377,10 +337,10 @@ b::first-letter {
 }
 
 .ImportantCheckbox {
-  display:none;
+  display: none;
 }
 
-/* .NoteBody  */textarea {
+textarea {
   resize: none;
   width: 100%;
   height: 100%;
@@ -393,7 +353,8 @@ b::first-letter {
   overflow-x: hidden;
 }
 
-/* .NoteBody */ textarea:focus-visible {
+/* .NoteBody */
+textarea:focus-visible {
   outline: 2px solid rgb(0, 112, 204);
 }
 
@@ -405,8 +366,8 @@ b::first-letter {
 
 @media (prefers-color-scheme: dark) {
   body {
-    background: linear-gradient(to top, #1a1d2c, #0b0d1a);
-    color: #c2c2c2;
+    background: black;
+    color: #ffffff;
   }
 
   .LoginForm {
@@ -421,28 +382,27 @@ b::first-letter {
   }
 
   .Form input {
-    border: 1px solid rgb(3, 31, 53);
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.548);
-    background: #002c4a;
-    color: white;
+    border: 1px solid transparent;
+    box-shadow: 0 0 30px rgb(0 0 0 / 55%);
+    background: #16181c;
+    color: #c9c9c9;
   }
 
   .Form input:focus-visible {
-    box-shadow: 0 0 20px rgb(0, 112, 204);
-    border: 1px solid rgb(0, 112, 204);
+    box-shadow: 0 0 20px rgb(0, 46, 86);
   }
 
   .Form button {
-    background: #004776;
+    background: linear-gradient(to bottom, rgb(0 97 177), rgb(0 87 158));
   }
 
   .i-true {
-    background: linear-gradient(to bottom, #002b48, #00101c);
+    background: rgb(0, 75, 137);
     color: inherit;
   }
 
   .i-false {
-    background: linear-gradient(to bottom, #191919, #0d0d0d);
+    background: #16181c;
     color: inherit;
   }
 
@@ -452,15 +412,15 @@ b::first-letter {
   }
 
   .DropdownMenu {
-    background: #002238cd;
-    box-shadow: 0 0 20px rgb(0 0 0 / 35%);
+    background: #002238ea;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.447);
     color: inherit;
   }
 
   .i-false .DropdownMenu {
-    background: #232323bb;
+    background: #232323e8;
   }
-  
+
   .i-true .ActionButton:hover {
     background: #002c4a;
   }
@@ -471,6 +431,6 @@ b::first-letter {
 
 @media screen and (max-width: 500px) {
   .Note {
-    grid-column: span 2 / auto;
+    grid-column: span 2;
   }
 }

@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Button } from './ButtonForm';
 import { ImportantCheckbox } from './ImportantCheckbox';
@@ -34,8 +35,26 @@ export const NoteForm = ({addNote}) => {
     setNewImportant(e.target.checked);
   };
 
+  const motionInitial = {
+    opacity: 0,
+    x: -100,
+    scale: 0.6
+  };
+  const motionAnimate = {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: {
+      type: 'spring'
+    }
+  };
+
   return (
-    <form className="Form" onSubmit={handleSubmit}>
+    <motion.form
+      initial={motionInitial}
+      animate={motionAnimate}
+      className="Form"
+      onSubmit={handleSubmit}>
       <h2>Notes</h2>
       <input
         type="text"
@@ -52,6 +71,6 @@ export const NoteForm = ({addNote}) => {
       <Button content={'Add a new note'} disable={newNote.length < 1} >
         <span className="material-symbols-outlined">note_add</span>
       </Button>
-    </form>
+    </motion.form>
   );
 };

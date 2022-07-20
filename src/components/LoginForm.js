@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Button } from './ButtonForm';
 
@@ -18,8 +19,25 @@ export const LoginForm = ({handleLoginSubmit}) => {
     handleLoginSubmit(username, password);
   };
 
+  const motionInitial = {
+    opacity: 0,
+    x: -100,
+    scale: 0.6
+  };
+  const motionAnimate = {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: {
+      type: 'spring'
+    }
+  };
+
   return (
-    <div className="Login">
+    <motion.div
+      initial={motionInitial}
+      animate={motionAnimate}
+      className="Login">
       <form className="LoginForm Form" onSubmit={handleSubmit}>
         <h1>Login</h1>
         <input
@@ -39,6 +57,6 @@ export const LoginForm = ({handleLoginSubmit}) => {
         </Button>
         
       </form>
-    </div>
+    </motion.div>
   );
 };
