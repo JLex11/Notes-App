@@ -2,12 +2,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import 'material-symbols';
 import moment from 'moment';
 import 'moment/locale/es';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDropdown } from '../redux/actions/dropdownActions';
+import { resetDropdown } from '../redux/actions/dropdownActions';
 import { deleteNote, updateNote } from '../redux/actions/notesActions';
 import { setNotification } from '../redux/actions/notificationsActions';
-import notesRequest from '../services/notesRequest';
 import { BodyNote } from './BodyNote';
 import { HeaderNote } from './HeaderNote';
 moment.locale('es');
@@ -16,7 +15,6 @@ export const Note = ({ note, timeTransition }) => {
   const dispatch = useDispatch();
 
   const user = useSelector(state => state.user);
-  const dropdown = useSelector(state => state.dropdown);
 
   const { id, content, date, important } = note;
   const { name } = note.user;
@@ -28,7 +26,7 @@ export const Note = ({ note, timeTransition }) => {
 
   const dateFormatted = moment(date).startOf('minute').fromNow();
 
-  const handleDropdown = () => dispatch(setDropdown(!dropdown));
+  const noteRef = useRef(null);
 
   const handleUpdateNote = () => {
     if (newContent.trim().length > 0) {
@@ -40,46 +38,25 @@ export const Note = ({ note, timeTransition }) => {
         },
       };
     
-      const updatedNote = notesRequest.update(toUpdateNote);
-      updatedNote
-        .then(note => {
-          dispatch(updateNote(toUpdateNote));
-          dispatch(setNotification({ msg: 'Note updated', type: 'success' }));
-          resetNewNote();
-          console.log({ note });
-        })
-        .catch(() => {
-          dispatch(setNotification({ msg: 'Error updating note', type: 'error' }));
-        });
-      /* await notesRequest.getAll().then(res => dispatch(initNotes(res))); */
-      /* catch {
-        dispatch(setNotification({ msg: 'Error updating note', type: 'error' }));
-      } */
+      dispatch(updateNote(toUpdateNote));
+      dispatch(setNotification({ msg: 'Note updated', type: 'success' }));
+      resetNewNote();
     }
   };
 
   const handleDeleteNote = () => {
-    const deletedNote = notesRequest.delete({ id });
-    deletedNote
-      .then((note) => {
-        console.log({ note });
-        dispatch(deleteNote(id));
-        dispatch(setNotification({ msg: 'Note deleted', type: 'success' }));
-      }).catch(() => {
-        dispatch(setNotification({ msg: 'Error deleting note', type: 'error' }));
-      });
-    /* await notesRequest.getAll().then(res => dispatch(initNotes(res))); */
-    /* dispatch(deleteNotes(id));
-    dispatch(setNotification({ msg: 'Note deleted', type: 'success' })); */
+    dispatch(deleteNote(id));
+    dispatch(setNotification({ msg: 'Note deleted', type: 'success' }));
   };
 
   const handleEditNote = () => {
-    setDropdown(false);
+    dispatch(resetDropdown());
     if (!isEditing) {
       setIsEditing(true);
       setNewContent(content);
       setNewImportant(important);
-    } else resetNewNote();
+    } else
+      resetNewNote();
   };
 
   const resetNewNote = () => {
@@ -96,7 +73,6 @@ export const Note = ({ note, timeTransition }) => {
 
   const handleDelete = () => {
     setDeleting(!deleting);
-    setDropdown(false);
     !deleting && handleDeleteNote(id);
   };
 
@@ -140,14 +116,13 @@ export const Note = ({ note, timeTransition }) => {
           initial={motionInitial}
           animate={motionAnimate}
           exit={motionExit}
+          ref={noteRef}
           className={noteClassNames}
           style={customStyles}
         >
           <HeaderNote
             dateFormatted={dateFormatted}
             user={user}
-            dropdown={dropdown}
-            handleDropdown={handleDropdown}
             handleEditNote={handleEditNote}
             isEditing={isEditing}
             handleDelete={handleDelete}

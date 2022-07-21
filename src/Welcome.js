@@ -1,13 +1,20 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useTypewriter } from 'react-simple-typewriter';
 import { App } from './App';
+import { initNotes } from './redux/actions/notesActions';
 import styles from './styles/Welcome.module.css';
 
 export const Welcome = () => {
+  const dispatch = useDispatch();
   const [goStarted, setgoStarted] = useState(
-    /* localStorage.getItem('goStarted') */false
+    localStorage.getItem('goStarted')
   );
+
+  useEffect(() => {
+    dispatch(initNotes());
+  }, [dispatch]);
 
   const handleGoStarted = (e) => {
     e.preventDefault();
@@ -44,7 +51,7 @@ export const Welcome = () => {
     cursor : '_',
     typeSpeed: 70,
     deleteSpeed: 50,
-    delaySpeed: 1500
+    delaySpeed: 1700
   });
 
   return (
@@ -71,11 +78,14 @@ export const Welcome = () => {
             To get started, click the button below to create a new
             note.
               </p>
-              <a href='#Notes' onClick={handleGoStarted}>
+              <motion.a
+                whileHover={{ scale: 1.1, rotate: 30 }}
+                href='#Notes'
+                onClick={handleGoStarted}>
                 <span className='material-symbols-outlined'>
               arrow_forward
                 </span>
-              </a>
+              </motion.a>
             </motion.div>
           </div>
         </AnimatePresence>

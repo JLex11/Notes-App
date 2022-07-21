@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 
 export const Dropdown = ({ user, icon, dropdown, handleDropdown, children }) => {
+
   const motionInitial = {
     opacity: 0,
     y: -50,

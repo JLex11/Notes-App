@@ -19,8 +19,8 @@
 }
 
 .Welcome a {
-  background: #484848;
-  color: white;
+  background: #e0e0e0;
+  color: rgb(0, 0, 0);
   border-radius: 50%;
   padding: 5px;
   display: flex;
@@ -47,5 +47,18 @@
   }
   100% {
     opacity: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .Welcome a {
+    background: #484848;
+    color: white;
+    border-radius: 50%;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
   }
 }

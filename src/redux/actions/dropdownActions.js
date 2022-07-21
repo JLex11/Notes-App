@@ -1,5 +1,8 @@
-export const setDropdown = () => {
-  return { type: '@dropdown/SET_DROPDOWN', payload: true };
+export const setDropdown = (ref) => {
+  return {
+    type: '@dropdown/SET_DROPDOWN',
+    payload: { ref }
+  };
 };
 
 export const resetDropdown = () => {

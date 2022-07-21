@@ -1,9 +1,20 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { resetDropdown, setDropdown } from '../redux/actions/dropdownActions';
 import { ActionButton } from './ActionButton';
 import { Dropdown } from './Dropdown';
 
 export const HeaderNote = (
-  { dateFormatted, user, dropdown, handleDropdown, handleEditNote, isEditing, handleDelete }
+  { dateFormatted, handleEditNote, isEditing, handleDelete }
 ) => {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
+  const dropdown = useSelector(state => state.dropdown);
+  
+  const handleDropdown = () => {
+    if (dropdown) dispatch(resetDropdown());
+    else dispatch(setDropdown());
+  };
+
   return (
     <div className='HeaderNote'>
       <div className='Date'>

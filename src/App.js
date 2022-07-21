@@ -7,8 +7,6 @@ import { LoginForm } from './components/LoginForm';
 import { Note } from './components/Note';
 import { NoteForm } from './components/NoteForm';
 import { Notification } from './components/Notification';
-import { initNotes } from './redux/actions/notesActions';
-import { setNotification } from './redux/actions/notificationsActions';
 import { resetUser, setUser } from './redux/actions/userActions';
 import notesRequest from './services/notesRequest';
 
@@ -17,18 +15,6 @@ export const App = () => {
   
   const notes = useSelector(state => state.notes);
   const user = useSelector(state => state.user);
-
-  useEffect(() => {
-    dispatch(setNotification({ msg: 'Loading', type: 'loading' }));
-    notesRequest.getAll()
-      .then(res => {
-        dispatch(initNotes(res));
-        setTimeout(() => dispatch(setNotification({ msg: 'Notes loaded', type: 'success' })), 500);
-      })
-      .catch(() => {
-        dispatch(setNotification({ msg: 'Error loading notes', type: 'error' }));
-      });
-  }, [dispatch]);
 
   useEffect(() => {
     const loggedUserJSON = localStorage.getItem('loggedNoteAppUser');

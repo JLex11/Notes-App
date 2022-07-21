@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addNote } from '../redux/actions/notesActions';
 import { setNotification } from '../redux/actions/notificationsActions';
-import notesRequest from '../services/notesRequest';
 import { Button } from './ButtonForm';
 import { ImportantCheckbox } from './ImportantCheckbox';
 
@@ -26,21 +25,14 @@ export const NoteForm = () => {
         important: newImportant,
       };
 
-      const addedNote = notesRequest.create({ note: toAddNote });
-      addedNote
-        .then(note => {
-          dispatch(addNote(note));
-          dispatch(setNotification({ msg: 'Note added', type: 'success' }));
-          setNewNote('');
-          setNewImportant(false);
-          window.scrollTo({
-            top: document.body.offsetHeight,
-            behavior: 'smooth'
-          });
-        })
-        .catch(() => {
-          dispatch(setNotification({ msg: 'Error adding note', type: 'error' }));
-        });
+      dispatch(addNote(toAddNote));
+      dispatch(setNotification({ msg: 'Note added', type: 'success' }));
+      setNewNote('');
+      setNewImportant(false);
+      window.scrollTo({
+        top: document.body.offsetHeight,
+        behavior: 'smooth'
+      });
     }
   };
   
