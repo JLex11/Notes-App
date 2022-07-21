@@ -1,6 +1,30 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Notes",
+  "name": "Notes App",
+  "start_url": "http://localhost:3000/?mode=pwa",
+  "lang": "es-COL",
+  "orientation": "any",
+  "display_override": ["fullscreen", "standalone"],
+  "display": "fullscreen",
+  "theme_color": "#008ae6",
+  "background_color": "#ffffff",
+  "description": "Simple, beautiful and trustworthy notes app",
+  "dir": "ltr",
+  "protocol_handlers": [
+    {
+      "name": "Notes",
+      "uri": "https://localhost:3000",
+      "title": "Notes"
+    }
+  ],
+  "scope": "/",
+  "categories": [
+    "notes",
+    "tools",
+    "productivity",
+    "education",
+    "books"
+  ],
   "icons": [
     {
       "src": "favicon.ico",
@@ -17,9 +41,5 @@
       "type": "image/png",
       "sizes": "512x512"
     }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  ]
 }

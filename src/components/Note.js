@@ -2,28 +2,76 @@ import { AnimatePresence, motion } from 'framer-motion';
 import 'material-symbols';
 import moment from 'moment';
 import 'moment/locale/es';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDropdown } from '../redux/actions/dropdownActions';
+import { deleteNote, updateNote } from '../redux/actions/notesActions';
+import { setNotification } from '../redux/actions/notificationsActions';
+import notesRequest from '../services/notesRequest';
 import { BodyNote } from './BodyNote';
 import { HeaderNote } from './HeaderNote';
 moment.locale('es');
 
-export const Note = ({ ...props }) => {
-  const { note, user, timeTransition, handleDeleteNote, handleUpdateNote} = props;
+export const Note = ({ note, timeTransition }) => {
+  const dispatch = useDispatch();
+
+  const user = useSelector(state => state.user);
+  const dropdown = useSelector(state => state.dropdown);
+
   const { id, content, date, important } = note;
   const { name } = note.user;
 
-  const [ isAnimation, setIsAnimation ] = useState('isAnimation');
   const [ isEditing, setIsEditing ] = useState(false);
   const [ newContent, setNewContent ] = useState(content);
   const [ newImportant, setNewImportant ] = useState(important);
-  const [dropdown, setDropdown] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
   const dateFormatted = moment(date).startOf('minute').fromNow();
 
-  const noteRef = useRef();
+  const handleDropdown = () => dispatch(setDropdown(!dropdown));
 
-  const handleDropdown = () => setDropdown(!dropdown);
+  const handleUpdateNote = () => {
+    if (newContent.trim().length > 0) {
+      const toUpdateNote = {
+        id,
+        note: {
+          content: newContent,
+          important: newImportant,
+        },
+      };
+    
+      const updatedNote = notesRequest.update(toUpdateNote);
+      updatedNote
+        .then(note => {
+          dispatch(updateNote(toUpdateNote));
+          dispatch(setNotification({ msg: 'Note updated', type: 'success' }));
+          resetNewNote();
+          console.log({ note });
+        })
+        .catch(() => {
+          dispatch(setNotification({ msg: 'Error updating note', type: 'error' }));
+        });
+      /* await notesRequest.getAll().then(res => dispatch(initNotes(res))); */
+      /* catch {
+        dispatch(setNotification({ msg: 'Error updating note', type: 'error' }));
+      } */
+    }
+  };
+
+  const handleDeleteNote = () => {
+    const deletedNote = notesRequest.delete({ id });
+    deletedNote
+      .then((note) => {
+        console.log({ note });
+        dispatch(deleteNote(id));
+        dispatch(setNotification({ msg: 'Note deleted', type: 'success' }));
+      }).catch(() => {
+        dispatch(setNotification({ msg: 'Error deleting note', type: 'error' }));
+      });
+    /* await notesRequest.getAll().then(res => dispatch(initNotes(res))); */
+    /* dispatch(deleteNotes(id));
+    dispatch(setNotification({ msg: 'Note deleted', type: 'success' })); */
+  };
 
   const handleEditNote = () => {
     setDropdown(false);
@@ -46,19 +94,11 @@ export const Note = ({ ...props }) => {
   const handleImportantChange = e =>
     setNewImportant(e.target.checked);
 
-  const handleUpdate = () => {
-    const noteToUpdate = { id, newContent, newImportant };
-    handleUpdateNote(noteToUpdate);
-    resetNewNote();
-  };
-
   const handleDelete = () => {
     setDeleting(!deleting);
     setDropdown(false);
     !deleting && handleDeleteNote(id);
   };
-
-  setTimeout(() => setIsAnimation(''), 3000);
 
   let gridSpan = 'span 0';
   if (content.length > 120) gridSpan = 'span 2';
@@ -68,7 +108,7 @@ export const Note = ({ ...props }) => {
     gridColumn: gridSpan,
   };
 
-  const noteClassNames = `Note i-${important} ${isEditing && 'NoteEditing'} ${isAnimation}`;
+  const noteClassNames = `Note i-${important} ${isEditing && 'NoteEditing'}`;
 
   const motionInitial = {
     y: 300,
@@ -102,7 +142,6 @@ export const Note = ({ ...props }) => {
           exit={motionExit}
           className={noteClassNames}
           style={customStyles}
-          ref={noteRef}
         >
           <HeaderNote
             dateFormatted={dateFormatted}
@@ -123,7 +162,7 @@ export const Note = ({ ...props }) => {
             id={id}
             newImportant={newImportant}
             handleImportantChange={handleImportantChange}
-            handleUpdate={handleUpdate}
+            handleUpdate={handleUpdateNote}
             content={content}
           />
         </motion.div>

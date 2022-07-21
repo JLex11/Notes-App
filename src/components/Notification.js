@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
+import { TailSpin } from 'react-loader-spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetNotification } from '../redux/actions/notificationsActions';
 
-export const Notification = ({ children }) => {
+export const Notification = () => {
   const dispatch = useDispatch();
   const {message} = useSelector(state => state.notification);
 
@@ -75,7 +76,9 @@ export const Notification = ({ children }) => {
           {icon === ''
             ? null
             : <span className="material-symbols-outlined">{icon}</span>}
-          {children}
+          {message?.type === 'loading'
+            && <TailSpin color='white' height={25} width={30} />
+          }
         </motion.div>
       )}
     </>
