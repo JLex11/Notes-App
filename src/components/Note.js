@@ -2,19 +2,17 @@ import { AnimatePresence, motion } from 'framer-motion';
 import 'material-symbols';
 import moment from 'moment';
 import 'moment/locale/es';
-import { useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { resetDropdown } from '../redux/actions/dropdownActions';
-import { deleteNote, updateNote } from '../redux/actions/notesActions';
-import { setNotification } from '../redux/actions/notificationsActions';
+import { useState } from 'react';
+import { useNotes } from '../hooks/useNotes';
+import { useUser } from '../hooks/useUser';
 import { BodyNote } from './BodyNote';
 import { HeaderNote } from './HeaderNote';
 moment.locale('es');
 
-export const Note = ({ note, timeTransition }) => {
-  const dispatch = useDispatch();
 
-  const user = useSelector(state => state.user);
+export const Note = ({ note, timeTransition }) => {
+  const user = useUser();
+  const notes = useNotes();
 
   const { id, content, date, important } = note;
   const { name } = note.user;
@@ -23,34 +21,23 @@ export const Note = ({ note, timeTransition }) => {
   const [ newContent, setNewContent ] = useState(content);
   const [ newImportant, setNewImportant ] = useState(important);
   const [deleting, setDeleting] = useState(false);
+  const [ dropdown, setDropdown ] = useState(false);
+  
+  const handleDropdown = () => {
+    setDropdown(!dropdown);
+  };
 
   const dateFormatted = moment(date).startOf('minute').fromNow();
 
-  const noteRef = useRef(null);
-
   const handleUpdateNote = () => {
     if (newContent.trim().length > 0) {
-      const toUpdateNote = {
-        id,
-        note: {
-          content: newContent,
-          important: newImportant,
-        },
-      };
-    
-      dispatch(updateNote(toUpdateNote));
-      dispatch(setNotification({ msg: 'Note updated', type: 'success' }));
+      notes.update(id, newContent, newImportant);
       resetNewNote();
     }
   };
 
-  const handleDeleteNote = () => {
-    dispatch(deleteNote(id));
-    dispatch(setNotification({ msg: 'Note deleted', type: 'success' }));
-  };
-
   const handleEditNote = () => {
-    dispatch(resetDropdown());
+    setDropdown(false);
     if (!isEditing) {
       setIsEditing(true);
       setNewContent(content);
@@ -73,7 +60,7 @@ export const Note = ({ note, timeTransition }) => {
 
   const handleDelete = () => {
     setDeleting(!deleting);
-    !deleting && handleDeleteNote(id);
+    !deleting && notes.remove(id);
   };
 
   let gridSpan = 'span 0';
@@ -116,7 +103,6 @@ export const Note = ({ note, timeTransition }) => {
           initial={motionInitial}
           animate={motionAnimate}
           exit={motionExit}
-          ref={noteRef}
           className={noteClassNames}
           style={customStyles}
         >
@@ -126,6 +112,8 @@ export const Note = ({ note, timeTransition }) => {
             handleEditNote={handleEditNote}
             isEditing={isEditing}
             handleDelete={handleDelete}
+            handleDropdown={handleDropdown}
+            dropdown={dropdown}
           />
           <div>
             <h5>{name}</h5>

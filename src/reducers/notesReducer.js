@@ -13,7 +13,7 @@ export const notesReducer = (state = [], action) => {
     case '@notes/UPDATE_NOTE':
       return state.map((note) => {
         if (note.id === action.payload.id) {
-          return { ...note, ...action.payload.note };
+          return { ...note, ...action.payload };
         }
         return note;
       });

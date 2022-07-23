@@ -1,41 +1,31 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addNote } from '../redux/actions/notesActions';
-import { setNotification } from '../redux/actions/notificationsActions';
+import { useField } from '../hooks/useField';
+import { useNotes } from '../hooks/useNotes';
 import { Button } from './ButtonForm';
 import { ImportantCheckbox } from './ImportantCheckbox';
 
-export const NoteForm = () => {
-  const dispatch = useDispatch();
 
-  const [ newNote, setNewNote ] = useState('');
+export const NoteForm = () => {
+  const notes = useNotes();
+
+  const noteField = useField('text');
   const [ newImportant, setNewImportant ] = useState(false);
   
-  const handleChange = e => {
-    setNewNote(e.target.value);
-  };
-
   const handleSubmit = e => {
     e.preventDefault();
     
-    if (newNote.trim().length > 0) {
-      const toAddNote = {
-        content: newNote,
-        important: newImportant,
-      };
-
-      dispatch(addNote(toAddNote));
-      dispatch(setNotification({ msg: 'Note added', type: 'success' }));
-      setNewNote('');
+    if (noteField.value.trim().length > 0) {
+      notes.add(noteField.value, newImportant);
+      noteField.reset();
       setNewImportant(false);
-      window.scrollTo({
+      /* window.scrollTo({
         top: document.body.offsetHeight,
         behavior: 'smooth'
-      });
+      }); */
     }
   };
-  
+
   const handleImportantChange = e => {
     setNewImportant(e.target.checked);
   };
@@ -62,18 +52,18 @@ export const NoteForm = () => {
       onSubmit={handleSubmit}>
       <h2>Notes</h2>
       <input
-        type="text"
-        className='FormInputAutoExpand'
-        onChange={handleChange}
-        value={newNote}
-        placeholder="Enter a new note"
-        size={newNote.length}
+        type={noteField.type}
+        placeholder="Enter your note"
+        value={noteField.value}
+        onChange={noteField.onChange}
+        className={noteField.error ? 'FormInputAutoExpand error' : 'FormInputAutoExpand'}
+        size={noteField.value.length}
       />
       <ImportantCheckbox
         newImportant={newImportant}
         handleImportantChange={handleImportantChange}
       />
-      <Button content={'Add a new note'} disable={newNote.length < 1} >
+      <Button content={'Add a new note'} disable={noteField.value.length < 1} >
         <span className="material-symbols-outlined">note_add</span>
       </Button>
     </motion.form>

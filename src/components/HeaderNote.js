@@ -1,19 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { resetDropdown, setDropdown } from '../redux/actions/dropdownActions';
+import { useSelector } from 'react-redux';
 import { ActionButton } from './ActionButton';
 import { Dropdown } from './Dropdown';
 
-export const HeaderNote = (
-  { dateFormatted, handleEditNote, isEditing, handleDelete }
-) => {
-  const dispatch = useDispatch();
+export const HeaderNote = (props) => {
+  const { dateFormatted, handleEditNote, isEditing, handleDelete, dropdown, handleDropdown } = props;
   const user = useSelector(state => state.user);
-  const dropdown = useSelector(state => state.dropdown);
-  
-  const handleDropdown = () => {
-    if (dropdown) dispatch(resetDropdown());
-    else dispatch(setDropdown());
-  };
 
   return (
     <div className='HeaderNote'>

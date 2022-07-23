@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setNotification } from '../redux/actions/notificationsActions';
-import { resetUser, setUser } from '../redux/actions/userActions';
+import { setNotification } from '../actions/notificationsActions';
+import { resetUser, setUser } from '../actions/userActions';
 import loginRequest from '../services/loginRequest';
 import notesRequest from '../services/notesRequest';
 import { Button } from './ButtonForm';

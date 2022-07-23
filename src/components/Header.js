@@ -1,24 +1,23 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetDropdown, setDropdown } from '../redux/actions/dropdownActions';
-import { resetUser } from '../redux/actions/userActions';
+import { resetUser } from '../actions/userActions';
 import notesRequest from '../services/notesRequest';
 import { ActionButton } from './ActionButton';
 import { Dropdown } from './Dropdown';
 
 export const Header = () => {
   const dispatch = useDispatch();
-
-  const dropdown = useSelector(state => state.dropdown);
   const user = useSelector(state => state.user);
 
+  const [ dropdown, setDropdown ] = useState(false);
+
   const handleDropdown = () => {
-    if (dropdown) dispatch(resetDropdown());
-    else dispatch(setDropdown());
+    setDropdown(!dropdown);
   };
 
   const handleLogout = () => {
-    dispatch(resetDropdown());
     dispatch(resetUser());
+    setDropdown(false);
     localStorage.removeItem('loggedNoteAppUser');
     notesRequest.setToken(null);
   };

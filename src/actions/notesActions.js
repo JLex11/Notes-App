@@ -1,8 +1,14 @@
-import notesRequest from '../../services/notesRequest';
+import notesRequest from '../services/notesRequest';
 
 export const initNotes = () => {
   return async (dispatch) => {
-    const res = await notesRequest.getAll();
+    let res = [];
+    if (navigator.onLine) {
+      res = await notesRequest.getAll();
+      localStorage.setItem('notes', JSON.stringify(res));
+    } else {
+      res = JSON.parse(localStorage.getItem('notes'));
+    }
     dispatch({
       type: '@notes/INIT_NOTES',
       payload: res
@@ -11,9 +17,8 @@ export const initNotes = () => {
 };
 
 export const addNote = (note) => {
-  console.log(note);
   return async (dispatch) => {
-    const res = await notesRequest.create({ note: note });
+    const res = await notesRequest.create({ note });
     dispatch({
       type: '@notes/ADD_NOTE',
       payload: res

@@ -1,20 +1,24 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useTypewriter } from 'react-simple-typewriter';
-import { App } from './App';
-import { initNotes } from './redux/actions/notesActions';
+import { App } from './components/App';
+import { useNotes } from './hooks/useNotes';
 import styles from './styles/Welcome.module.css';
 
 export const Welcome = () => {
-  const dispatch = useDispatch();
+  const notes = useNotes();
+
   const [goStarted, setgoStarted] = useState(
-    localStorage.getItem('goStarted')
+    /* localStorage.getItem('goStarted') */false
   );
+  const [waitForReady, setWaitForReady] = useState(false);
 
   useEffect(() => {
-    dispatch(initNotes());
-  }, [dispatch]);
+    setTimeout(() => {
+      notes.init();
+      setWaitForReady(true);
+    }, 2000);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleGoStarted = (e) => {
     e.preventDefault();
@@ -51,7 +55,7 @@ export const Welcome = () => {
     cursor : '_',
     typeSpeed: 70,
     deleteSpeed: 50,
-    delaySpeed: 1700
+    delaySpeed: 1700,
   });
 
   return (
@@ -66,8 +70,7 @@ export const Welcome = () => {
               animate={motionIn}
               exit={motionOut}
               className={styles.Welcome}>
-              <h1>Welcome
-                {text}
+              <h1>Welcome {waitForReady ? text : 'to your Notes App'}
                 <span className={styles.cursor}>|</span>
               </h1>
               <p>
