@@ -52,6 +52,7 @@ export const Welcome = () => {
   const { text } = useTypewriter({
     words: typeWords,
     loop: 0,
+    delay: 1000,
     cursor : '_',
     typeSpeed: 70,
     deleteSpeed: 50,

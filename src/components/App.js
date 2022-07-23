@@ -10,11 +10,13 @@ import { Notification } from './Notification';
 
 export const App = () => {
   const notes = useSelector(state => state.notes);
-  const {user} = useUser();
+  const { user } = useUser();
 
-  const sortCondition = (a, b) => {
-    if (a.date > b.date) return -1;
-    if (a.date < b.date) return 1;
+  const sortCondition = (a, b, noteKey, increment) => {
+    noteKey = noteKey || 'date';
+    increment = increment || 'desc';
+    if (a[noteKey] > b[noteKey]) return increment === 'desc' ? -1 : 1;
+    if (a[noteKey] < b[noteKey]) return increment === 'desc' ? 1 : -1;
     return 0;
   };
 
@@ -27,8 +29,7 @@ export const App = () => {
         : <NoteForm />
       }
       <motion.div layout className='Notes'>
-        {notes
-          .sort((a, b) => sortCondition(a, b))
+        {notes.sort((a, b) => sortCondition(a, b, 'date', 'desc'))
           .map((note, i) =>
             <Note
               key={note.id}

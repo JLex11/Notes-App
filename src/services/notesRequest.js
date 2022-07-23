@@ -8,8 +8,8 @@ notesRequest.setToken = newToken => {
   token = `Bearer ${newToken}`;
 };
 
-notesRequest.getAll = async () => {
-  const response = await fetch(baseUrl);
+notesRequest.getAll = async ({limit}) => {
+  const response = await fetch(baseUrl + `?limit=${limit}`);
   return await response.json();
 };
 

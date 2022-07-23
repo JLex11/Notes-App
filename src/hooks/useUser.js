@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetUser, setUser } from '../actions/userActions';
+import { resetUser, setUser } from '../redux/actions/userActions';
 import notesRequest from '../services/notesRequest';
 
 export const useUser = () => {

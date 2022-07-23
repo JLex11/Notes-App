@@ -8,7 +8,7 @@ import { userReducer } from '../reducers/userReducer';
 const rootReducer = combineReducers({
   notes: notesReducer,
   notification: notificationsReducer,
-  user: userReducer,
+  user: userReducer
 });
 
 export const store = configureStore({

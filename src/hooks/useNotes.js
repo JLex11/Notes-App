@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { addNote, deleteNote, initNotes, updateNote } from '../actions/notesActions';
-import { setNotification } from '../actions/notificationsActions';
+import { addNote, deleteNote, initNotes, updateNote } from '../redux/actions/notesActions';
+import { setNotification } from '../redux/actions/notificationsActions';
 
 export const useNotes = () => {
   const dispatch = useDispatch();

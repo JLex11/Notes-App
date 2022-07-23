@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetUser } from '../actions/userActions';
+import { resetUser } from '../redux/actions/userActions';
 import notesRequest from '../services/notesRequest';
 import { ActionButton } from './ActionButton';
 import { Dropdown } from './Dropdown';

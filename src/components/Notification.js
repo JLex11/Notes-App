@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { TailSpin } from 'react-loader-spinner';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetNotification } from '../actions/notificationsActions';
+import { resetNotification } from '../redux/actions/notificationsActions';
 
 export const Notification = () => {
   const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import notesRequest from '../services/notesRequest';
+import notesRequest from '../../services/notesRequest';
 
 export const initNotes = () => {
   return async (dispatch) => {

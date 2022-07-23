@@ -19,16 +19,11 @@ export const NoteForm = () => {
       notes.add(noteField.value, newImportant);
       noteField.reset();
       setNewImportant(false);
-      /* window.scrollTo({
-        top: document.body.offsetHeight,
-        behavior: 'smooth'
-      }); */
     }
   };
 
-  const handleImportantChange = e => {
+  const handleImportantChange = e =>
     setNewImportant(e.target.checked);
-  };
 
   const motionInitial = {
     opacity: 0,

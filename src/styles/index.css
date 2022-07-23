@@ -21,6 +21,10 @@ body {
   min-height: 100vh;
 }
 
+button {
+  cursor: pointer;
+}
+
 .App {
   text-align: center;
   display: flex;
@@ -182,6 +186,8 @@ b::first-letter {
   display: flex;
   gap: 7px;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   font-size: 1.3rem;
   border-radius: 15px;
   padding: 5px;
