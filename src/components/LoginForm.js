@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../actions/notificationsActions';
 import { resetUser, setUser } from '../actions/userActions';
+import { useField } from '../hooks/useField';
 import loginRequest from '../services/loginRequest';
 import notesRequest from '../services/notesRequest';
 import { Button } from './ButtonForm';
@@ -10,16 +10,15 @@ import { Button } from './ButtonForm';
 export const LoginForm = () => {
   const dispatch = useDispatch();
 
-  const [ username, setUsername ] = useState('');
-  const [ password, setPassword ] = useState('');
-
-  const handleUsernameChange = e => setUsername(e.target.value);
-  const handleSetPassword = e => setPassword(e.target.value);
+  const pattern = /^[a-zA-Z0-9]{3,30}$/;
+  const username = useField('text', pattern);
+  const password = useField('password', pattern);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    const user = loginRequest.login({ username, password });
+    const user = loginRequest.login({ username: username.value, password: password.value });
+    
     user.then(res => {
       localStorage.setItem('loggedNoteAppUser', JSON.stringify(res));
       notesRequest.setToken(res.token);
@@ -53,18 +52,21 @@ export const LoginForm = () => {
       <form className="LoginForm Form" onSubmit={handleSubmit}>
         <h1>Login</h1>
         <input
-          type="text"
+          type={username.type}
+          value={username.value}
+          onChange={username.onChange}
           placeholder="Username"
-          value={username}
-          onChange={handleUsernameChange}
         />
         <input
-          type="password"
+          type={password.type}
+          value={password.value}
+          onChange={password.onChange}
           placeholder="Password"
-          value={password}
-          onChange={handleSetPassword}
         />
-        <Button content={'Accept'} disable={!username || !password ? true : false} >
+        <Button
+          content={'Accept'}
+          disable={username.error || password.error ? true : false}
+        >
           <span className="material-symbols-outlined">input</span>
         </Button>
       </form>

@@ -1,19 +1,12 @@
 import { useState } from 'react';
 
-export const useField = ({type, regExp}) => {
+export const useField = (type, regExp) => {
   const [value, setValue] = useState('');
   const [error, setError] = useState(null);
 
   const onChange = (event) => {
     setValue(event.target.value);
-    
-    if (regExp) {
-      if (regExp.test(event.target.value)) {
-        setError(null);
-      } else {
-        setError('Incorrect value');
-      }
-    }
+    setError(regExp?.test(event.target.value) ? null : 'Invalid value');
   };
 
   const reset = () => {

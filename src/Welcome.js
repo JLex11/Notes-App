@@ -9,7 +9,7 @@ export const Welcome = () => {
   const notes = useNotes();
 
   const [goStarted, setgoStarted] = useState(
-    /* localStorage.getItem('goStarted') */false
+    localStorage.getItem('goStarted')
   );
   const [waitForReady, setWaitForReady] = useState(false);
 
@@ -17,7 +17,7 @@ export const Welcome = () => {
     setTimeout(() => {
       notes.init();
       setWaitForReady(true);
-    }, 2000);
+    }, 1000);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleGoStarted = (e) => {
@@ -55,7 +55,7 @@ export const Welcome = () => {
     cursor : '_',
     typeSpeed: 70,
     deleteSpeed: 50,
-    delaySpeed: 1700,
+    delaySpeed: 1400,
   });
 
   return (
