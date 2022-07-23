@@ -1,26 +1,26 @@
-import { useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetUser } from '../redux/actions/userActions';
 import notesRequest from '../services/notesRequest';
-import { ActionButton } from './ActionButton';
-import { Dropdown } from './Dropdown';
+import ActionButton from './ActionButton';
+import Dropdown from './Dropdown';
 
-export const Header = () => {
+const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
 
   const [ dropdown, setDropdown ] = useState(false);
 
-  const handleDropdown = () => {
+  const handleDropdown = useCallback(() => {
     setDropdown(!dropdown);
-  };
+  }, [dropdown, setDropdown]);
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     dispatch(resetUser());
     setDropdown(false);
     localStorage.removeItem('loggedNoteAppUser');
     notesRequest.setToken(null);
-  };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className='HeaderBar'>
@@ -52,3 +52,5 @@ export const Header = () => {
     </div>
   );
 };
+
+export default memo(Header);

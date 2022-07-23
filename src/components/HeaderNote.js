@@ -1,8 +1,9 @@
+import { memo } from 'react';
 import { useSelector } from 'react-redux';
-import { ActionButton } from './ActionButton';
-import { Dropdown } from './Dropdown';
+import ActionButton from './ActionButton';
+import Dropdown from './Dropdown';
 
-export const HeaderNote = (props) => {
+const HeaderNote = (props) => {
   const { dateFormatted, handleEditNote, isEditing, handleDelete, dropdown, handleDropdown } = props;
   const user = useSelector(state => state.user);
 
@@ -31,3 +32,5 @@ export const HeaderNote = (props) => {
     </div>
   );
 };
+
+export default memo(HeaderNote);

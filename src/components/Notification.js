@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
+import { memo } from 'react';
 import { TailSpin } from 'react-loader-spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetNotification } from '../redux/actions/notificationsActions';
 
-export const Notification = () => {
+const Notification = () => {
   const dispatch = useDispatch();
   const {message} = useSelector(state => state.notification);
 
@@ -84,3 +85,5 @@ export const Notification = () => {
     </>
   );
 };
+
+export default memo(Notification);

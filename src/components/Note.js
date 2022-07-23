@@ -2,15 +2,15 @@ import { AnimatePresence, motion } from 'framer-motion';
 import 'material-symbols';
 import moment from 'moment';
 import 'moment/locale/es';
-import { useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { useNotes } from '../hooks/useNotes';
 import { useUser } from '../hooks/useUser';
-import { BodyNote } from './BodyNote';
-import { HeaderNote } from './HeaderNote';
+import BodyNote from './BodyNote';
+import HeaderNote from './HeaderNote';
 moment.locale('es');
 
 
-export const Note = ({ note, timeTransition }) => {
+const Note = ({ note, timeTransition }) => {
   const user = useUser();
   const notes = useNotes();
 
@@ -46,17 +46,17 @@ export const Note = ({ note, timeTransition }) => {
       resetNewNote();
   };
 
-  const resetNewNote = () => {
+  const resetNewNote = useCallback(() => {
     setIsEditing(false);
     setNewContent('');
     setNewImportant(false);
-  };
+  }, [setIsEditing, setNewContent, setNewImportant]);
 
-  const handleContentChange = e =>
-    setNewContent(e.target.value);
+  const handleContentChange = useCallback(e =>
+    setNewContent(e.target.value), [setNewContent]);
 
-  const handleImportantChange = e =>
-    setNewImportant(e.target.checked);
+  const handleImportantChange = useCallback(e =>
+    setNewImportant(e.target.checked), [setNewImportant]);
 
   const handleDelete = () => {
     setDeleting(!deleting);
@@ -133,3 +133,5 @@ export const Note = ({ note, timeTransition }) => {
     </AnimatePresence>
   );
 };
+
+export default memo(Note);

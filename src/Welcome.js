@@ -1,30 +1,21 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { useTypewriter } from 'react-simple-typewriter';
-import { App } from './components/App';
-import { useNotes } from './hooks/useNotes';
+import App from './components/App';
 import styles from './styles/Welcome.module.css';
 
-export const Welcome = () => {
-  const notes = useNotes();
-
-  const [goStarted, setgoStarted] = useState(
-    localStorage.getItem('goStarted')
-  );
-  const [waitForReady, setWaitForReady] = useState(false);
-
+const Welcome = () => {
+  const [goStarted, setgoStarted] = useState(false);
+  
   useEffect(() => {
-    setTimeout(() => {
-      notes.init();
-      setWaitForReady(true);
-    }, 1000);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    setgoStarted(localStorage.getItem('goStarted'));
+  }, []);
 
-  const handleGoStarted = (e) => {
+  const handleGoStarted = useCallback((e) => {
     e.preventDefault();
     setgoStarted(true);
     localStorage.setItem('goStarted', 'true');
-  };
+  }, []);
 
   const motionInital = {
     opacity: 0,
@@ -64,36 +55,37 @@ export const Welcome = () => {
       {goStarted ? (
         <App />
       ) : (
-        <AnimatePresence>
-          <div className={styles.ContainerWelcome}>
-            <motion.div
-              initial={motionInital}
-              animate={motionIn}
-              exit={motionOut}
-              className={styles.Welcome}>
-              <h1>Welcome {waitForReady ? text : 'to your Notes App'}
-                <span className={styles.cursor}>|</span>
-              </h1>
-              <p>
+        <div className={styles.ContainerWelcome}>
+          <motion.div
+            initial={motionInital}
+            animate={motionIn}
+            exit={motionOut}
+            className={styles.Welcome}>
+            <h1>Welcome
+              {text}
+              <span className={styles.cursor}>|</span>
+            </h1>
+            <p>
             This is a simple React-Redux app that allows you to
             create, edit, and delete notes.
-              </p>
-              <p>
+            </p>
+            <p>
             To get started, click the button below to create a new
             note.
-              </p>
-              <motion.a
-                whileHover={{ scale: 1.1, rotate: 30 }}
-                href='#Notes'
-                onClick={handleGoStarted}>
-                <span className='material-symbols-outlined'>
+            </p>
+            <motion.a
+              whileHover={{ scale: 1.1, rotate: 30 }}
+              href='#Notes'
+              onClick={handleGoStarted}>
+              <span className='material-symbols-outlined'>
               arrow_forward
-                </span>
-              </motion.a>
-            </motion.div>
-          </div>
-        </AnimatePresence>
+              </span>
+            </motion.a>
+          </motion.div>
+        </div>
       )}
     </>
   );
 };
+
+export default memo(Welcome);

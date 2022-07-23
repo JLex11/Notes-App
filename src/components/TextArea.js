@@ -1,4 +1,6 @@
-export const TextArea = ({newContent, handleContentChange}) => {
+import { memo } from 'react';
+
+const TextArea = ({newContent, handleContentChange}) => {
   return (
     <>
       <textarea
@@ -9,3 +11,5 @@ export const TextArea = ({newContent, handleContentChange}) => {
     </>
   );
 };
+
+export default memo(TextArea);

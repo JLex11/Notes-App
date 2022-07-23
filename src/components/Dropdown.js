@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
+import { memo } from 'react';
 
-export const Dropdown = ({ user, icon, dropdown, handleDropdown, children }) => {
+const Dropdown = ({ user, icon, dropdown, handleDropdown, children }) => {
 
   const motionInitial = {
     opacity: 0,
@@ -35,3 +36,5 @@ export const Dropdown = ({ user, icon, dropdown, handleDropdown, children }) => 
     </>
   );
 };
+
+export default memo(Dropdown);

@@ -1,9 +1,17 @@
-import { ImportantCheckbox } from './ImportantCheckbox';
-import { TextArea } from './TextArea';
+import { memo } from 'react';
+import ImportantCheckbox from './ImportantCheckbox';
+import TextArea from './TextArea';
 
-export const BodyNote = (
-  {isEditing, newContent, handleContentChange, id, newImportant, handleImportantChange, handleUpdate, content}
-) => {
+const BodyNote = ({
+  isEditing,
+  newContent,
+  handleContentChange,
+  id,
+  newImportant,
+  handleImportantChange,
+  handleUpdate,
+  content
+}) => {
   return (
     <div className='NoteBody'>
       {isEditing
@@ -33,3 +41,5 @@ export const BodyNote = (
     </div>
   );
 };
+
+export default memo(BodyNote);

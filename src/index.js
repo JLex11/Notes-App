@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store/store';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import './styles/index.css';
-import { Welcome } from './Welcome';
+import Welcome from './Welcome';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

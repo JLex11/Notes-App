@@ -1,13 +1,14 @@
 import { motion } from 'framer-motion';
+import { memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useField } from '../hooks/useField';
 import { setNotification } from '../redux/actions/notificationsActions';
 import { resetUser, setUser } from '../redux/actions/userActions';
 import loginRequest from '../services/loginRequest';
 import notesRequest from '../services/notesRequest';
-import { Button } from './ButtonForm';
+import Button from './ButtonForm';
 
-export const LoginForm = () => {
+const LoginForm = () => {
   const dispatch = useDispatch();
 
   const pattern = /^[a-zA-Z0-9]{3,30}$/;
@@ -73,3 +74,5 @@ export const LoginForm = () => {
     </motion.div>
   );
 };
+
+export default memo(LoginForm);

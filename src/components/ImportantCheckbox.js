@@ -1,4 +1,6 @@
-export const ImportantCheckbox = ({
+import { memo } from 'react';
+
+const ImportantCheckbox = ({
   id,
   newImportant,
   handleImportantChange,
@@ -25,3 +27,5 @@ export const ImportantCheckbox = ({
     </label>
   );
 };
+
+export default memo(ImportantCheckbox);

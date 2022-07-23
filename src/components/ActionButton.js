@@ -1,4 +1,6 @@
-export const ActionButton = ({ handleClick, label, children }) => {
+import { memo } from 'react';
+
+const ActionButton = ({ handleClick, label, children }) => {
   return (
     <div onClick={handleClick} className="ActionButton">
       {children}
@@ -6,3 +8,5 @@ export const ActionButton = ({ handleClick, label, children }) => {
     </div>
   );
 };
+
+export default memo(ActionButton);

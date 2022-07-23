@@ -1,18 +1,18 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { useField } from '../hooks/useField';
 import { useNotes } from '../hooks/useNotes';
-import { Button } from './ButtonForm';
-import { ImportantCheckbox } from './ImportantCheckbox';
+import Button from './ButtonForm';
+import ImportantCheckbox from './ImportantCheckbox';
 
 
-export const NoteForm = () => {
+const NoteForm = () => {
   const notes = useNotes();
 
   const noteField = useField('text');
   const [ newImportant, setNewImportant ] = useState(false);
   
-  const handleSubmit = e => {
+  const handleSubmit = useCallback(e => {
     e.preventDefault();
     
     if (noteField.value.trim().length > 0) {
@@ -20,10 +20,10 @@ export const NoteForm = () => {
       noteField.reset();
       setNewImportant(false);
     }
-  };
+  }, [noteField, notes, newImportant]);
 
-  const handleImportantChange = e =>
-    setNewImportant(e.target.checked);
+  const handleImportantChange = useCallback(e =>
+    setNewImportant(e.target.checked), [setNewImportant]);
 
   const motionInitial = {
     opacity: 0,
@@ -64,3 +64,5 @@ export const NoteForm = () => {
     </motion.form>
   );
 };
+
+export default memo(NoteForm);

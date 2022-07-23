@@ -1,24 +1,31 @@
 import { motion } from 'framer-motion';
 import 'material-symbols';
+import { memo, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useNotes } from '../hooks/useNotes';
 import { useUser } from '../hooks/useUser';
-import { Header } from './Header';
-import { LoginForm } from './LoginForm';
-import { Note } from './Note';
-import { NoteForm } from './NoteForm';
-import { Notification } from './Notification';
+import Header from './Header';
+import LoginForm from './LoginForm';
+import Note from './Note';
+import NoteForm from './NoteForm';
+import Notification from './Notification';
 
-export const App = () => {
+const App = () => {
   const notes = useSelector(state => state.notes);
   const { user } = useUser();
 
-  const sortCondition = (a, b, noteKey, increment) => {
+  const notesF = useNotes();
+  useEffect(() => {
+    notesF.init();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const sortCondition = useCallback((a, b, noteKey, increment) => {
     noteKey = noteKey || 'date';
     increment = increment || 'desc';
     if (a[noteKey] > b[noteKey]) return increment === 'desc' ? -1 : 1;
     if (a[noteKey] < b[noteKey]) return increment === 'desc' ? 1 : -1;
     return 0;
-  };
+  }, []);
 
   return (
     <div className='App'>
@@ -41,3 +48,5 @@ export const App = () => {
     </div>
   );
 };
+
+export default memo(App);

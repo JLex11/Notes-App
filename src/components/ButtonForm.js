@@ -1,4 +1,6 @@
-export const Button = ({ content, disable, handleHiddenClick, children }) => {
+import { memo } from 'react';
+
+const Button = ({ content, disable, children }) => {
   return (
     <button className={disable ? 'disabledBtn' : ''}>
       {children}
@@ -6,3 +8,5 @@ export const Button = ({ content, disable, handleHiddenClick, children }) => {
     </button>
   );
 };
+
+export default memo(Button);
