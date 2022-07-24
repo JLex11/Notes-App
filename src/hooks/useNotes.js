@@ -1,12 +1,21 @@
 import { useDispatch } from 'react-redux';
+import { selectedFilter } from '../redux/actions/filterActions';
 import { addNote, deleteNote, initNotes, updateNote } from '../redux/actions/notesActions';
 import { setNotification } from '../redux/actions/notificationsActions';
+import { setUser } from '../redux/actions/userActions';
+import notesRequest from '../services/notesRequest';
 
 export const useNotes = () => {
   const dispatch = useDispatch();
 
   const init = () => {
     dispatch(initNotes());
+    const loggedNoteAppUser = JSON.parse(localStorage.getItem('loggedNoteAppUser'));
+    if (loggedNoteAppUser) {
+      dispatch(setNotification({ msg: 'Welcome back', type: 'info' }));
+      dispatch(setUser(loggedNoteAppUser));
+      notesRequest.setToken(loggedNoteAppUser.token);
+    }
   };
 
   const add = (newNote, newImportant) => {
@@ -35,10 +44,15 @@ export const useNotes = () => {
     dispatch(setNotification({ msg: 'Note deleted', type: 'success' }));
   };
 
+  const setSelectedFilter = filter => {
+    filter && dispatch(selectedFilter(filter));
+  };
+
   return {
     init,
     add,
     update,
-    remove
+    remove,
+    setSelectedFilter
   };
 };

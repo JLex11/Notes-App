@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { TailSpin } from 'react-loader-spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetNotification } from '../redux/actions/notificationsActions';
@@ -41,11 +41,11 @@ const Notification = () => {
     }
   };
 
-  if (message) {
+  useEffect(() => {
     setTimeout(() => {
       dispatch(resetNotification());
     }, 3000);
-  }
+  });
 
   const { background, color, icon } = colors[message?.type] || colors.default;
   const style = { background, color };

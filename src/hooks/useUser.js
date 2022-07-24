@@ -1,24 +1,24 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { resetUser, setUser } from '../redux/actions/userActions';
-import notesRequest from '../services/notesRequest';
+import loginRequest from '../services/loginRequest';
 
 export const useUser = () => {
   const dispatch = useDispatch();
+  
+  const login = async ({username, password}) => {
+    const user = await loginRequest.login({ username: username.value, password: password.value });
+    localStorage.setItem('loggedNoteAppUser', JSON.stringify(user));
+    dispatch(setUser(user));
+    console.log(user);
+  };
 
-  useEffect(() => {
-    const loggedUserJSON = localStorage.getItem('loggedNoteAppUser');
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON);
-      if (user?.token) {
-        setUser(user);
-        notesRequest.setToken(user.token);
-        dispatch(setUser(user));
-      } else dispatch(resetUser());
-    }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const logout = () => {
+    localStorage.removeItem('loggedNoteAppUser');
+    dispatch(resetUser());
+  };
 
   return {
-    user: useSelector(state => state.user),
+    login,
+    logout
   };
 };

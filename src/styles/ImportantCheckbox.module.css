@@ -1,0 +1,7 @@
+.ImportantConfig {
+  justify-content: space-between;
+  font-size: 14pt;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

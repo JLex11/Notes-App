@@ -9,9 +9,19 @@ export const initNotes = () => {
     } else {
       res = JSON.parse(localStorage.getItem('notes'));
     }
+
     dispatch({
       type: '@notes/INIT_NOTES',
       payload: res
+    });
+
+    const filters = Object.keys(res[0]);
+    dispatch({
+      type: '@filter/INIT_FILTERS',
+      payload: {
+        filters: filters,
+        selected: filters[0]
+      }
     });
   };
 };

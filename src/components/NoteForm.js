@@ -2,9 +2,9 @@ import { motion } from 'framer-motion';
 import { memo, useCallback, useState } from 'react';
 import { useField } from '../hooks/useField';
 import { useNotes } from '../hooks/useNotes';
+import styles from '../styles/NoteForm.module.css';
 import Button from './ButtonForm';
 import ImportantCheckbox from './ImportantCheckbox';
-
 
 const NoteForm = () => {
   const notes = useNotes();
@@ -43,7 +43,7 @@ const NoteForm = () => {
     <motion.form
       initial={motionInitial}
       animate={motionAnimate}
-      className="Form"
+      className={styles.Form}
       onSubmit={handleSubmit}>
       <h2>Notes</h2>
       <input
@@ -51,7 +51,7 @@ const NoteForm = () => {
         placeholder="Enter your note"
         value={noteField.value}
         onChange={noteField.onChange}
-        className={noteField.error ? 'FormInputAutoExpand error' : 'FormInputAutoExpand'}
+        className={styles.FormInputAutoExpand}
         size={noteField.value.length}
       />
       <ImportantCheckbox

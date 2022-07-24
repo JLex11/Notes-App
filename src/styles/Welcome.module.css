@@ -35,7 +35,7 @@
 }
 
 .cursor {
-  animation: blink 1s linear infinite forwards;
+  animation: blink 1.5s linear infinite forwards;
 }
 
 @keyframes blink {

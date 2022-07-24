@@ -1,12 +1,10 @@
-const baseUrl = 'http://localhost:3001/notes';
 
+const baseUrl = 'http://localhost:3001/notes';
 const notesRequest = {};
 
-let token = null;
+let token;
 
-notesRequest.setToken = newToken => {
-  token = `Bearer ${newToken}`;
-};
+notesRequest.setToken = (t) => token = `Bearer ${t}`;
 
 notesRequest.getAll = async () => {
   const response = await fetch(baseUrl);

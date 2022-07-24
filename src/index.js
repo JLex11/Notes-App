@@ -1,16 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
+import App from './App';
 import { store } from './redux/store/store';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import './styles/index.css';
 import Welcome from './Welcome';
 
+const IndexSwitcher = () => {
+  const user = useSelector(state => state.user) || JSON.parse(localStorage.getItem('loggedNoteAppUser'));
+  return user ? <App /> : <Welcome />;
+};
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Welcome />
+      <IndexSwitcher/>
     </Provider>
   </React.StrictMode>
 );

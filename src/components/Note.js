@@ -5,6 +5,7 @@ import 'moment/locale/es';
 import { memo, useCallback, useState } from 'react';
 import { useNotes } from '../hooks/useNotes';
 import { useUser } from '../hooks/useUser';
+import styles from '../styles/Note.module.css';
 import BodyNote from './BodyNote';
 import HeaderNote from './HeaderNote';
 moment.locale('es');
@@ -71,8 +72,8 @@ const Note = ({ note, timeTransition }) => {
     gridColumn: gridSpan,
   };
 
-  const noteClassNames = `Note i-${important} ${isEditing && 'NoteEditing'}`;
-
+  const noteClassNames = `${styles.Note} ${styles[`i-${important}`]} ${isEditing && styles.NoteEditing}`;
+  
   const motionInitial = {
     y: 300,
     scale: 0.6,

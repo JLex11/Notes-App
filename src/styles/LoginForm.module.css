@@ -1,0 +1,92 @@
+.Login {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.LoginForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  gap: 10px;
+  max-width: 500px;
+  width: 100%;
+  border: 1px solid rgb(177, 177, 177);
+  background: linear-gradient(to bottom, #eeeeee, #d8d8d8);
+  border-radius: 15px;
+  text-align: center;
+}
+
+.LoginForm input,
+.LoginForm button {
+  max-width: 100%;
+  font-size: 1.5rem;
+  border: 1px solid #c4c4c4;
+  border-radius: 15px;
+  padding: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+  transition: box-shadow 0.5s ease-in-out;
+  font-size: 16pt;
+}
+
+.LoginForm button {
+  background: #008ae6;
+  color: rgb(255, 255, 255);
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
+.LoginForm button.disabledBtn {
+  background: rgb(238, 238, 238);
+  border: 1px solid rgb(177, 177, 177);
+  color: rgb(177, 177, 177);
+  cursor: not-allowed;
+}
+
+.LoginForm button::first-letter,
+p::first-letter,
+b::first-letter {
+  text-transform: uppercase;
+}
+
+.LoginForm input:focus-visible {
+  outline: 1px solid rgb(0, 112, 204);
+  box-shadow: 0 0 20px rgb(0, 112, 204);
+}
+
+@media (prefers-color-scheme: dark) {
+  .LoginForm {
+    background: rgb(18, 18, 18);
+    border: 1px solid rgb(38, 38, 38);
+  }
+
+  .LoginForm button.disabledBtn {
+    background: rgb(27, 27, 27);
+    border: 1px solid rgb(38, 38, 38);
+    color: rgb(38, 38, 38);
+  }
+
+  .LoginForm input {
+    border: 1px solid transparent;
+    box-shadow: 0 0 30px rgb(0 0 0 / 55%);
+    background: #16181c;
+    color: #c9c9c9;
+  }
+
+  .LoginForm input:focus-visible {
+    box-shadow: 0 0 20px rgb(0, 46, 86);
+  }
+
+  .LoginForm button {
+    background: linear-gradient(to bottom, rgb(0 97 177), rgb(0 87 158));
+  }
+}

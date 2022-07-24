@@ -6,6 +6,7 @@ import { setNotification } from '../redux/actions/notificationsActions';
 import { resetUser, setUser } from '../redux/actions/userActions';
 import loginRequest from '../services/loginRequest';
 import notesRequest from '../services/notesRequest';
+import styles from '../styles/LoginForm.module.css';
 import Button from './ButtonForm';
 
 const LoginForm = () => {
@@ -49,8 +50,8 @@ const LoginForm = () => {
     <motion.div
       initial={motionInitial}
       animate={motionAnimate}
-      className="Login">
-      <form className="LoginForm Form" onSubmit={handleSubmit}>
+      className={styles.Login}>
+      <form className={styles.LoginForm} onSubmit={handleSubmit}>
         <h1>Login</h1>
         <input
           type={username.type}

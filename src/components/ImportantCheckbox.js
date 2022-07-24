@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import styles from '../styles/ImportantCheckbox.module.css';
 
 const ImportantCheckbox = ({
   id,
@@ -10,12 +11,12 @@ const ImportantCheckbox = ({
   }
 
   return (
-    <label htmlFor={`checkbox-${id}`} className="ImportantConfig">
+    <label htmlFor={`checkbox-${id}`} className={styles.ImportantConfig}>
       <h5>Important</h5>
       <input
         type="checkbox"
         id={`checkbox-${id}`}
-        className="ImportantCheckbox"
+        style={{ display: 'none' }}
         checked={newImportant}
         onChange={e => handleImportantChange(e)}
       />
