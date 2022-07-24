@@ -1,14 +1,8 @@
 import { memo } from 'react';
 import styles from '../styles/ImportantCheckbox.module.css';
 
-const ImportantCheckbox = ({
-  id,
-  newImportant,
-  handleImportantChange,
-}) => {
-  if (!id) {
-    id = Math.random() * 1000;
-  }
+const ImportantCheckbox = ({ id, newImportant, handleImportantChange}) => {
+  if (!id) id = Math.random() * 1000;
 
   return (
     <label htmlFor={`checkbox-${id}`} className={styles.ImportantConfig}>
