@@ -1,0 +1,36 @@
+.DropdownIconLauncher {
+  border-radius: 50%;
+  transition: transform 0.3s ease-in-out, background 0.3s ease-in-out,
+    color 0.3s ease-in-out;
+  padding: 5px;
+}
+
+.DropdownIconLauncher:hover {
+  cursor: pointer;
+  background: rgb(0, 0, 0, 0.1);
+  border-radius: 50%;
+}
+
+.DropdownMenu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 45px;
+  right: 10px;
+  gap: 5px;
+  font-size: 10pt;
+  background: #ffffffd6;
+  backdrop-filter: blur(5px);
+  color: black;
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+  z-index: 2;
+}
+
+.DropdownMenu {
+  background: #131f28e2;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.447);
+  color: inherit;
+}

@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { useNotes } from '../hooks/useNotes';
+import styles from '../styles/Select.module.css';
 
 const FilterSelect = () => {
   const filter = useSelector(state => state.filter);
@@ -14,7 +15,11 @@ const FilterSelect = () => {
   return (
     <div>
       {filter?.filters ? (
-        <select onChange={handleChange} selected={filter.selected}>
+        <select
+          onChange={handleChange}
+          selected={filter.selected}
+          className={styles.FilterSelect}
+        >
           {filter.filters.map(option => (
             <option key={option} value={option}>
               {option}

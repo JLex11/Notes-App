@@ -2,6 +2,7 @@ import { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetUser } from '../redux/actions/userActions';
 import notesRequest from '../services/notesRequest';
+import styles from '../styles/Header.module.css';
 import ActionButton from './ActionButton';
 import Dropdown from './Dropdown';
 
@@ -23,7 +24,7 @@ const Header = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className='HeaderBar'>
+    <div className={styles.HeaderBar}>
       {user ? (
         <>
           <div>
@@ -32,7 +33,7 @@ const Header = () => {
             </ActionButton>
           </div>
           <div>
-            <div className='HeaderUserOptions'>
+            <div className={styles.HeaderUserOptions}>
               <Dropdown
                 user={user}
                 icon={'more_vert'}
@@ -40,7 +41,7 @@ const Header = () => {
                 handleDropdown={handleDropdown}
               >
                 <ActionButton label={'Logout'} handleClick={handleLogout}>
-                  <span className='material-symbols-outlined'>logout</span>
+                  <span className={`material-symbols-outlined ${styles.LogOut}`}>logout</span>
                 </ActionButton>
               </Dropdown>
             </div>

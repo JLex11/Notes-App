@@ -39,6 +39,29 @@
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.35);
 }
 
+@media (prefers-color-scheme: dark) {
+  .i-true {
+    background: rgb(0, 75, 137);
+    color: inherit;
+  }
+
+  .i-false {
+    background: #16181c;
+    color: inherit;
+  }
+
+  .NoteBody textarea {
+    background: #ffffff1a;
+    color: #e0e0e0;
+  }
+.i-true .ActionButton:hover {
+    background: #002c4a;
+  }
+  .i-false .ActionButton:hover {
+    background: #000000b0;
+  }
+}
+
 @media screen and (max-width: 500px) {
   .Note {
     grid-column: span 2;

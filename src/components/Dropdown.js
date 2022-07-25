@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { memo } from 'react';
+import styles from '../styles/Dropdown.module.css';
 
 const Dropdown = ({ user, icon, dropdown, handleDropdown, children }) => {
 
@@ -19,7 +20,7 @@ const Dropdown = ({ user, icon, dropdown, handleDropdown, children }) => {
     <>
       {user ? (
         <span
-          className='material-symbols-outlined DropdownIconLauncher'
+          className={`${styles.DropdownIconLauncher} material-symbols-outlined`}
           onClick={handleDropdown}
           style={{ transform: dropdown ? 'rotate(180deg)' : 'rotate(0deg)' }}
         >{icon || 'expand_more'}
@@ -29,7 +30,7 @@ const Dropdown = ({ user, icon, dropdown, handleDropdown, children }) => {
         <motion.div
           initial={motionInitial}
           animate={motionAnimate}
-          className="DropdownMenu">
+          className={styles.DropdownMenu}>
           {children}
         </motion.div>
       )}

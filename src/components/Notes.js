@@ -1,5 +1,6 @@
 import { memo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import styles from '../styles/Notes.module.css';
 import Note from './Note';
 
 const Notes = () => {
@@ -7,13 +8,15 @@ const Notes = () => {
   const filterSelected = useSelector(state => state.filter.selected);
 
   const sortCondition = useCallback((a, b, noteKey = 'date', increment = 'desc') => {
-    if (a[noteKey] > b[noteKey]) return increment === 'desc' ? -1 : 1;
-    if (a[noteKey] < b[noteKey]) return increment === 'desc' ? 1 : -1;
+    if (a[noteKey] > b[noteKey])
+      return increment === 'desc' ? -1 : 1;
+    if (a[noteKey] < b[noteKey])
+      return increment === 'desc' ? 1 : -1;
     return 0;
   }, []);
 
   return (
-    <div className='Notes'>
+    <div className={styles.Notes}>
       {notes.sort((a, b) => sortCondition(a, b, filterSelected, 'desc'))
         .map((note, i) =>
           <Note
