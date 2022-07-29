@@ -50,7 +50,9 @@ const Notification = ({ message, delayTransition }) => {
 
   const handleDelete = () => {
     setExiting(!exiting);
-    !exiting && dispatch(resetNotification(message));
+    setTimeout(() => {
+      !exiting && dispatch(resetNotification(message));
+    }, 550);
   };
 
   const { background, color, icon } = nTypes[type] || nTypes.default;
@@ -76,8 +78,12 @@ const Notification = ({ message, delayTransition }) => {
 
   const motionExit = {
     opacity: 0,
-    x: 100,
-    scaleX: 0.3
+    x: -150,
+    scaleX: 0.3,
+    transition: {
+      duration: 0.3,
+      delay: delayTransition
+    }
   };
 
   return (

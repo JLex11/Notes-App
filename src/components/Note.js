@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import moment from 'moment';
 import 'moment/locale/es';
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useRef, useState } from 'react';
 import { useNotes } from '../hooks/useNotes';
 import { useUser } from '../hooks/useUser';
 import styles from '../styles/Note.module.css';
@@ -23,10 +23,10 @@ const Note = ({ note, timeTransition }) => {
   const [ newImportant, setNewImportant ] = useState(important);
   const [deleting, setDeleting] = useState(false);
   const [ dropdown, setDropdown ] = useState(false);
+
+  const noteRef = useRef();
   
-  const handleDropdown = () => {
-    setDropdown(!dropdown);
-  };
+  const handleDropdown = () => setDropdown(!dropdown);
 
   const dateFormatted = moment(date).startOf('minute').fromNow();
 
@@ -51,17 +51,19 @@ const Note = ({ note, timeTransition }) => {
     setIsEditing(false);
     setNewContent('');
     setNewImportant(false);
-  }, [setIsEditing, setNewContent, setNewImportant]);
+  }, []);
 
   const handleContentChange = useCallback(e =>
-    setNewContent(e.target.value), [setNewContent]);
+    setNewContent(e.target.value), []);
 
   const handleImportantChange = useCallback(e =>
-    setNewImportant(e.target.checked), [setNewImportant]);
+    setNewImportant(e.target.checked), []);
 
   const handleDelete = () => {
     setDeleting(!deleting);
-    !deleting && notes.remove(id);
+    setTimeout(() => {
+      !deleting && notes.remove(id);
+    }, 550);
   };
 
   let gridSpan = 'span 0';
@@ -95,6 +97,9 @@ const Note = ({ note, timeTransition }) => {
     y: 100,
     scale: 0,
     opacity: 0,
+    transition: {
+      duration: 0.5
+    }
   };
 
   return (
@@ -106,6 +111,7 @@ const Note = ({ note, timeTransition }) => {
           exit={motionExit}
           className={noteClassNames}
           style={customStyles}
+          ref={noteRef}
         >
           <HeaderNote
             dateFormatted={dateFormatted}

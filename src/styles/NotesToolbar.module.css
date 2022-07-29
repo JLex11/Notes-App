@@ -23,10 +23,19 @@
   align-items: center;
 }
 
+.ToolbarSticky {
+  background: #f5f5f5d6;
+  backdrop-filter: blur(10px);
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --bg-toolbar: #171717;
     --color-toolbar: #fff;
     --border-toolbar: 1px solid #2e2e2e;
+  }
+
+  .ToolbarSticky {
+    background: #171717d2;
   }
 }

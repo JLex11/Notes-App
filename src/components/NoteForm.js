@@ -58,8 +58,8 @@ const NoteForm = () => {
         newImportant={newImportant}
         handleImportantChange={handleImportantChange}
       />
-      <Button content={'Add a new note'} disable={noteField.value.length < 1} >
-        <span className="material-symbols-outlined">note_add</span>
+      <Button content={'Add note'} disable={noteField.value.length < 1}>
+        <span className="material-symbols-outlined">send</span>
       </Button>
     </motion.form>
   );

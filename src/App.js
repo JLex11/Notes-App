@@ -1,4 +1,3 @@
-
 import { memo, useEffect } from 'react';
 import Header from './components/Header';
 import NoteForm from './components/NoteForm';
@@ -10,18 +9,19 @@ import { useNotes } from './hooks/useNotes';
 const App = () => {
   const notesF = useNotes();
   
-  useEffect(() => {
-    notesF.init();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => notesF.init(), []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className='App'>
-      <Header />
-      <NotificationsContainer />
-      <NoteForm />
-      <NotesToolbar />
-      <Notes />
-    </div>
+    <section className='App'>
+      <aside className='Sidebar'></aside>
+      <main className='Main'>
+        <Header />
+        <NotificationsContainer />
+        <NoteForm />
+        <NotesToolbar />
+        <Notes />
+      </main>
+    </section>
   );
 };
 
