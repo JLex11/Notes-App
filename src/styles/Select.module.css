@@ -1,6 +1,48 @@
-FilterSelect {
+.FilterContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.FilterSelect {
   padding: 7px;
   font-size: 12pt;
   border-radius: 7px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.304);
+  border: 0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.104);
+}
+
+.FilterSelect:focus-visible {
+  outline: 2px solid rgb(0, 150, 244);
+}
+
+.OrderButton {
+  border-radius: 7px;
+  padding: 1px 3px;
+  border: 0;
+}
+
+.OrderButton:hover {
+  cursor: pointer;
+  background-color: #ffffff;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.154);
+}
+
+@media (prefers-color-scheme: dark) {
+  .FilterSelect {
+    background-color: #1e1e1e;
+    color: #fff;
+  }
+
+  .OrderButton {
+    background-color: #171717;
+    color: white;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.154);
+  }
+
+  .OrderButton:hover {
+    background-color: #272727;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.154);
+  }
 }

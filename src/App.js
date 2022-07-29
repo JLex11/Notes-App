@@ -1,10 +1,10 @@
 import 'material-symbols';
 import { memo, useEffect } from 'react';
-import FilterSelect from './components/FilterSelect';
 import Header from './components/Header';
 import NoteForm from './components/NoteForm';
 import Notes from './components/Notes';
-import Notification from './components/Notification';
+import NotesToolbar from './components/NotesToolbar';
+import NotificationsContainer from './components/NotificationsContainer';
 import { useNotes } from './hooks/useNotes';
 
 const App = () => {
@@ -17,9 +17,9 @@ const App = () => {
   return (
     <div className='App'>
       <Header />
-      <Notification/>
+      <NotificationsContainer />
       <NoteForm />
-      <FilterSelect />
+      <NotesToolbar />
       <Notes />
     </div>
   );

@@ -77,7 +77,7 @@ const Note = ({ note, timeTransition }) => {
   const motionInitial = {
     y: 300,
     scale: 0.6,
-    opacity: 0
+    opacity: 0,
   };
   const motionAnimate = {
     y: 0,

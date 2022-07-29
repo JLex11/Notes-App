@@ -6,6 +6,7 @@ import Note from './Note';
 const Notes = () => {
   const notes = useSelector(state => state.notes);
   const filterSelected = useSelector(state => state.filter.selected);
+  const filterOrder = useSelector(state => state.filter.order);
 
   const sortCondition = useCallback((a, b, noteKey = 'date', increment = 'desc') => {
     if (a[noteKey] > b[noteKey])
@@ -17,7 +18,8 @@ const Notes = () => {
 
   return (
     <div className={styles.Notes}>
-      {notes.sort((a, b) => sortCondition(a, b, filterSelected, 'desc'))
+      {notes.sort((a, b) =>
+        sortCondition(a, b, filterSelected, filterOrder))
         .map((note, i) =>
           <Note
             key={note.id}

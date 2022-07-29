@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+:root {
+  --scrollbar-bg: #008ae6;
+}
+
 .material-symbols-outlined {
   user-select: none;
 }
@@ -17,12 +21,24 @@ body {
   overflow-x: hidden;
 }
 
-#root {
-  min-height: 100vh;
+::-webkit-scrollbar {
+  height: 14px;
+  width: 14px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-bg);
+  background-clip: content-box;
+  border-radius: 5px;
+  border: 2px solid transparent;
+}
+::-webkit-scrollbar-track-piece {
+  background: inherit;
+  background-clip: content-box;
+  border-radius: 5px;
 }
 
-button {
-  cursor: pointer;
+#root {
+  min-height: 100vh;
 }
 
 .App {
@@ -31,6 +47,10 @@ button {
   justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48;
 }
 
 h1 {
@@ -46,390 +66,13 @@ h2 {
   margin-bottom: 20px;
 }
 
-.HeaderBar {
-  width: 100%;
-  max-height: 65px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-}
-
-span.LogOut {
-  font-size: 28pt;
-}
-
-span.LogOut:hover {
-  color: #f44336;
-  cursor: pointer;
-}
-
-.Notification {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  gap: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
-  border-radius: 15px;
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1000;
-}
-
-.Form button.ButtonHidden {
-  background: transparent;
-  box-shadow: none;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-.ButtonHidden .material-symbols-outlined {
-  color: black;
-  font-size: 26pt;
-}
-
-.Form {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-bottom: 20px;
-  padding: 20px;
-  gap: 10px;
-}
-
-.Form input,
-.Form button {
-  max-width: 100%;
-  font-size: 1.5rem;
-  border: 1px solid #c4c4c4;
-  border-radius: 15px;
-  padding: 0.5rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
-  transition: box-shadow 0.5s ease-in-out;
-  font-size: 16pt;
-}
-
-.Form button {
-  background: #008ae6;
-  color: rgb(255, 255, 255);
-  border: 1px solid transparent;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
-}
-
-.Form button.disabledBtn {
-  background: rgb(238, 238, 238);
-  border: 1px solid rgb(177, 177, 177);
-  color: rgb(177, 177, 177);
-  cursor: not-allowed;
-}
-
-.Form button::first-letter,
-p::first-letter,
-b::first-letter {
-  text-transform: uppercase;
-}
-
-.Form input:focus-visible {
-  outline: 1px solid rgb(0, 112, 204);
-  box-shadow: 0 0 20px rgb(0, 112, 204);
-}
-
-.Form label.ImportantConfig {
-  margin: 10px;
-}
-
-.Form label.ImportantConfig h5 {
-  font-size: 16pt;
-}
-
-.Notes {
-  width: 100%;
-  padding: 10px;
-  display: grid;
-  grid-auto-flow: dense;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-.Notes::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
-}
-
-.Note {
-  display: flex;
-  gap: 7px;
-  flex-direction: column;
-  font-size: 1.3rem;
-  border-radius: 15px;
-  padding: 5px;
-  width: 100%;
-  height: 100%;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-  transition: background 0.5s ease-in-out, color 0.5s ease-in-out,
-    box-shadow 0.3s ease-in-out;
-  position: relative;
-}
-
-.Note:hover {
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.10);
-}
-
-.Note.NoteEditing {
-  z-index: 3;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  height: 55%;
-  width: 90%;
-  max-width: 600px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.35);
-}
-
-.Note .material-symbols-outlined {
-  border-radius: 50%;
-  padding: 3px;
-}
-
-.Note p {
-  font-size: 12pt;
-  padding: 10px;
-}
-
-.i-true {
-  background: linear-gradient(to bottom, #008ae6, #0099ff);
-  color: white;
-}
-
-.i-false {
-  background: linear-gradient(to bottom, #e7e7e7, #dadada);
-}
-
-.HeaderNote {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 5px;
-  font-size: 12pt;
-}
-
-.HeaderNote > .Date {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  font-size: 9pt;
-}
-
-.HeaderNote > .Date b {
-  font-weight: 500;
-}
-
-.Note .material-symbols-outlined .DropdownIconLauncher {
-  border-radius: 50%;
-  transition: transform 0.3s ease-in-out, background 0.3s ease-in-out,
-    color 0.3s ease-in-out;
-  padding: 5px;
-}
-
-.HeaderNote > .material-symbols-outlined:hover {
-  cursor: pointer;
-  background: white;
-  color: black;
-}
-
-.HeaderUserOptions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.DropdownIconLauncher:hover {
-  cursor: pointer;
-  background: rgb(0, 0, 0, 0.1);
-  border-radius: 50%;
-}
-
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48;
-}
-
-.DropdownMenu {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  top: 45px;
-  right: 10px;
-  gap: 5px;
-  font-size: 10pt;
-  background: #ffffffd6;
-  backdrop-filter: blur(5px);
-  color: black;
-  border-radius: 10px;
-  padding: 5px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
-  z-index: 2;
-}
-
-.ActionButton {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 10px;
-  border-radius: 5px;
-}
-
-.ActionButton:hover {
-  cursor: pointer;
-  background: rgb(0, 0, 0, 0.1);
-}
-
-.NoteBody {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.NoteBody h3 {
-  font-size: 12pt;
-}
-
-.NoteBody > div {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 5px;
-}
-
-.ImportantConfig {
-  justify-content: space-between;
-  font-size: 14pt;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.ImportantCheckbox {
-  display: none;
-}
-
-textarea {
-  resize: none;
-  width: 100%;
-  height: 100%;
-  border: 2px solid transparent;
-  border-radius: 10px;
-  font-size: 12pt;
-  font-family: inherit;
-  background: white;
-  padding: 5px;
-  overflow-x: hidden;
-}
-
-/* .NoteBody */
-textarea:focus-visible {
-  outline: 2px solid rgb(0, 112, 204);
-}
-
-.NoteBody .SaveButton:hover {
-  cursor: pointer;
-  background: white;
-  color: black;
-}
-
 @media (prefers-color-scheme: dark) {
+  :root {
+    --scrollbar-bg: #004b89;
+  }
+
   body {
     background: black;
     color: #ffffff;
-  }
-
-  .LoginForm {
-    background: rgb(18, 18, 18);
-    border: 1px solid rgb(38, 38, 38);
-  }
-
-  .Form button.disabledBtn {
-    background: rgb(27, 27, 27);
-    border: 1px solid rgb(38, 38, 38);
-    color: rgb(38, 38, 38);
-  }
-
-  .Form input {
-    border: 1px solid transparent;
-    box-shadow: 0 0 30px rgb(0 0 0 / 55%);
-    background: #16181c;
-    color: #c9c9c9;
-  }
-
-  .Form input:focus-visible {
-    box-shadow: 0 0 20px rgb(0, 46, 86);
-  }
-
-  .Form button {
-    background: linear-gradient(to bottom, rgb(0 97 177), rgb(0 87 158));
-  }
-
-  .i-true {
-    background: rgb(0, 75, 137);
-    color: inherit;
-  }
-
-  .i-false {
-    background: #16181c;
-    color: inherit;
-  }
-
-  .NoteBody textarea {
-    background: #ffffff1a;
-    color: #e0e0e0;
-  }
-
-  .DropdownMenu {
-    background: #002238ea;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.447);
-    color: inherit;
-  }
-
-  .i-false .DropdownMenu {
-    background: #232323e8;
-  }
-
-  .i-true .ActionButton:hover {
-    background: #002c4a;
-  }
-  .i-false .ActionButton:hover {
-    background: #000000b0;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .Note {
-    grid-column: span 2;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .Note {
-    grid-column: span 3 !important;
   }
 }

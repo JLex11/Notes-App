@@ -1,16 +1,12 @@
-const initialState = {
-  message: {
-    msg: 'Loading', type: 'loading'
-  }
-};
+const initialState = [{msg: 'Loading', type: 'loading'}];
 
 export const notificationsReducer = (state = initialState, action) => {
   switch (action.type) {
     case '@notifications/SET_MESSAGE':
-      return { message: action.payload };
+      return [ ...state, action.payload ];
     
     case '@notifications/RESET_MESSAGE':
-      return { message: null };
+      return state.filter(notification => notification.msg !== action.payload.msg);
 
     default:
       return state;

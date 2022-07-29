@@ -16,11 +16,13 @@ export const initNotes = () => {
     });
 
     const filters = Object.keys(res[0]);
+    let date = filters.filter((filter) => filter === 'date');
+    
     dispatch({
       type: '@filter/INIT_FILTERS',
       payload: {
         filters: filters,
-        selected: filters[0]
+        selected: date || filters[0]
       }
     });
   };

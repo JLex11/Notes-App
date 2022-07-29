@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
+import styles from '../styles/Note.module.css';
 import ActionButton from './ActionButton';
 import Dropdown from './Dropdown';
 
@@ -8,8 +9,8 @@ const HeaderNote = (props) => {
   const user = useSelector(state => state.user);
 
   return (
-    <div className='HeaderNote'>
-      <div className='Date'>
+    <div className={styles.HeaderNote}>
+      <div className={styles.Date}>
         <span className='material-symbols-outlined'>history</span>
         <b>{dateFormatted}</b>
       </div>

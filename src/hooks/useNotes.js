@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { selectedFilter } from '../redux/actions/filterActions';
+import { orderFilter, selectedFilter } from '../redux/actions/filterActions';
 import { addNote, deleteNote, initNotes, updateNote } from '../redux/actions/notesActions';
 import { setNotification } from '../redux/actions/notificationsActions';
 import { setUser } from '../redux/actions/userActions';
@@ -48,11 +48,16 @@ export const useNotes = () => {
     filter && dispatch(selectedFilter(filter));
   };
 
+  const setOrder = order => {
+    order && dispatch(orderFilter(order));
+  };
+
   return {
     init,
     add,
     update,
     remove,
-    setSelectedFilter
+    setSelectedFilter,
+    setOrder
   };
 };

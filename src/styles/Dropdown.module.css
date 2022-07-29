@@ -29,8 +29,10 @@
   z-index: 2;
 }
 
-.DropdownMenu {
-  background: #131f28e2;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.447);
-  color: inherit;
+@media (prefers-color-scheme: dark) {
+  .DropdownMenu {
+    background: #131f28e2;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.447);
+    color: inherit;
+  }
 }
