@@ -1,4 +1,4 @@
-import 'material-symbols';
+
 import { memo, useEffect } from 'react';
 import Header from './components/Header';
 import NoteForm from './components/NoteForm';

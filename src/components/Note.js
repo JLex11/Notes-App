@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import 'material-symbols';
+
 import moment from 'moment';
 import 'moment/locale/es';
 import { memo, useCallback, useState } from 'react';
