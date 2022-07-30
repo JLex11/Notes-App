@@ -12,8 +12,6 @@ const Welcome = () => {
     setgoStarted(true);
   }, []);
 
-  console.log('goStarted', goStarted);
-
   const motionInital = {
     opacity: 0,
     scale: 0.7,
