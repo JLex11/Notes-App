@@ -1,9 +1,14 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styles from '../styles/Notes.module.css';
 import Note from './Note';
+import { useNotes } from '../hooks/useNotes';
 
 const Notes = () => {
+  const notesF = useNotes();
+  
+  useEffect(() => notesF.init(), []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const notes = useSelector(state => state.notes);
   const filterSelected = useSelector(state => state.filter.selected);
   const filterOrder = useSelector(state => state.filter.order);

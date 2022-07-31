@@ -12,7 +12,6 @@ export const useNotes = () => {
     dispatch(initNotes());
     const loggedNoteAppUser = JSON.parse(localStorage.getItem('loggedNoteAppUser'));
     if (loggedNoteAppUser) {
-      dispatch(setNotification({ msg: 'Welcome back', type: 'info' }));
       dispatch(setUser(loggedNoteAppUser));
       notesRequest.setToken(loggedNoteAppUser.token);
     }

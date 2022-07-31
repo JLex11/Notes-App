@@ -6,11 +6,7 @@ import NotesToolbar from './components/NotesToolbar';
 import NotificationsContainer from './components/NotificationsContainer';
 import { useNotes } from './hooks/useNotes';
 
-const App = () => {
-  const notesF = useNotes();
-  
-  useEffect(() => notesF.init(), []); // eslint-disable-line react-hooks/exhaustive-deps
-
+const App = () => { // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <section className='App'>
       <aside className='Sidebar'></aside>

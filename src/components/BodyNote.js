@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import styles from '../styles/Note.module.css';
 import ImportantCheckbox from './ImportantCheckbox';
 import TextArea from './TextArea';
 
@@ -13,7 +14,7 @@ const BodyNote = ({
   content
 }) => {
   return (
-    <div className='NoteBody'>
+    <div className={styles.NoteBody}>
       {isEditing
         ? (
           <>
@@ -28,10 +29,10 @@ const BodyNote = ({
                 handleImportantChange={handleImportantChange}
               />
               <span
-                className='material-symbols-outlined SaveButton'
+                className={`material-symbols-outlined ${styles.SaveButton}`}
                 onClick={handleUpdate}
               >
-                    save
+              save
               </span>
             </div>
           </>

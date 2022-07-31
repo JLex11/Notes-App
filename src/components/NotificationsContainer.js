@@ -12,7 +12,7 @@ const NotificationsContainer = () => {
         <Notification
           key={index}
           message={notification}
-          delayTransition={index * 0.1}
+          delayTransition={index * 0.2}
         />
       ))}
     </div>

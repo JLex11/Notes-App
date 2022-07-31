@@ -34,12 +34,12 @@ const LoginForm = () => {
 
   const motionInitial = {
     opacity: 0,
-    x: -100,
-    scale: 0.6
+    y: 200,
+    scale: 0.8
   };
   const motionAnimate = {
     opacity: 1,
-    x: 0,
+    y: 0,
     scale: 1,
     transition: {
       type: 'spring'
