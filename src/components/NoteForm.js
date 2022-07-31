@@ -5,6 +5,7 @@ import { useNotes } from '../hooks/useNotes';
 import styles from '../styles/NoteForm.module.css';
 import Button from './ButtonForm';
 import ImportantCheckbox from './ImportantCheckbox';
+import InputAutoExpand from './InputAutoExpand';
 
 const NoteForm = () => {
   const notes = useNotes();
@@ -46,12 +47,11 @@ const NoteForm = () => {
       className={styles.Form}
       onSubmit={handleSubmit}>
       <h2>Notes</h2>
-      <input
+      <InputAutoExpand
         type={noteField.type}
-        placeholder="Enter your note"
+        placeholder={'Enter your note'}
         value={noteField.value}
-        onChange={noteField.onChange}
-        className={styles.FormInputAutoExpand}
+        handleChange={noteField.onChange}
         size={noteField.value.length}
       />
       <ImportantCheckbox

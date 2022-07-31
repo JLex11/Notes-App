@@ -17,3 +17,12 @@ export const orderFilter = (order) => {
     });
   };
 };
+
+export const searchFilter = (search) => {
+  return async (dispatch) => {
+    dispatch({
+      type: '@filter/SET_SEARCH',
+      payload: { search }
+    });
+  };
+};

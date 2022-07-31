@@ -1,8 +1,8 @@
 import { memo, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useNotes } from '../hooks/useNotes';
 import styles from '../styles/Notes.module.css';
 import Note from './Note';
-import { useNotes } from '../hooks/useNotes';
 
 const Notes = () => {
   const notesF = useNotes();
@@ -12,6 +12,7 @@ const Notes = () => {
   const notes = useSelector(state => state.notes);
   const filterSelected = useSelector(state => state.filter.selected);
   const filterOrder = useSelector(state => state.filter.order);
+  const searchWord = useSelector(state => state.filter.search);
 
   const sortCondition = useCallback((a, b, noteKey = 'date', increment = 'desc') => {
     if (a[noteKey] > b[noteKey])
@@ -21,10 +22,18 @@ const Notes = () => {
     return 0;
   }, []);
 
+  const filteredNotes = useCallback((notes, searchWord) => {
+    if (!searchWord) return notes;
+    
+    const pattern = new RegExp(searchWord, 'i');
+    return notes.filter(note => pattern.test(note.content));
+  }, []);
+
   return (
     <div className={styles.Notes}>
-      {notes.sort((a, b) =>
-        sortCondition(a, b, filterSelected, filterOrder))
+      {filteredNotes(notes, searchWord)
+        .sort((a, b) =>
+          sortCondition(a, b, filterSelected, filterOrder))
         .map((note, i) =>
           <Note
             key={note.id}

@@ -31,7 +31,7 @@
 
 @media (prefers-color-scheme: dark) {
   .FilterSelect {
-    background-color: #1e1e1e;
+    background-color: #000000;
     color: #fff;
   }
 

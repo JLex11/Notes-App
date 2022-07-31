@@ -1,31 +1,48 @@
 import { memo, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { useField } from '../hooks/useField';
+import { searchFilter } from '../redux/actions/filterActions';
 import styles from '../styles/NotesToolbar.module.css';
 import FilterSelect from './FilterSelect';
+import InputAutoExpand from './InputAutoExpand';
 import NotesCounter from './NotesCounter';
 
 const NotesToolbar = () => {
+  const dispatch = useDispatch();
+
   const toolbarRef = useRef();
+  const searchField = useField('search');
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
       if (toolbarRef.current) {
-        if (toolbarRef.current.getBoundingClientRect().top <= 0) {
+        if (toolbarRef.current.getBoundingClientRect().top <= 0)
           toolbarRef.current.classList.add(styles.ToolbarSticky);
-        } else {
+        else
           toolbarRef.current.classList.remove(styles.ToolbarSticky);
-        }
       }
     });
   }, []);
 
+  const onChange = (event) => {
+    searchField.onChange(event);
+    dispatch(searchFilter(event.target.value));
+  };
+
   return (
     <div className={styles.Toolbar} ref={toolbarRef}>
-      <div className={styles.ToolbarLeft}>
-        <FilterSelect />
+      <FilterSelect />
+      <div className={styles.ContainerSearchBox}>
+        <InputAutoExpand
+          type={searchField.type}
+          placeholder={'Search note'}
+          value={searchField.value}
+          handleChange={onChange}
+          size={searchField.value.length}
+        />
+        <span className='material-symbols-outlined'>search</span>
       </div>
-      <div className={styles.ToolbarRight}>
-        <NotesCounter />
-      </div>
+      <NotesCounter />
     </div>
   );
 };

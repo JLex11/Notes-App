@@ -16,6 +16,12 @@ export const filterReducer = (state = [], action) => {
         order: action.payload.order
       };
     
+    case '@filter/SET_SEARCH':
+      return {
+        ...state,
+        search: action.payload.search
+      };
+    
     default:
       return state;
   }
