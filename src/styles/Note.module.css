@@ -72,6 +72,15 @@
     box-shadow 0.3s ease-in-out;
 }
 
+.ImportantAndSave {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  font-size: 12pt;
+  padding: 10px;
+}
+
 @media (prefers-color-scheme: dark) {
   .i-true {
     background: rgb(0, 75, 137);

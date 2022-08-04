@@ -6,9 +6,8 @@ export const initNotes = () => {
     if (navigator.onLine) {
       res = await notesRequest.getAll();
       localStorage.setItem('notes', JSON.stringify(res));
-    } else {
+    } else
       res = JSON.parse(localStorage.getItem('notes'));
-    }
 
     dispatch({
       type: '@notes/INIT_NOTES',

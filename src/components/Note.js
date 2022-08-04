@@ -1,5 +1,4 @@
 import { AnimatePresence, motion } from 'framer-motion';
-
 import moment from 'moment';
 import 'moment/locale/es';
 import { memo, useCallback, useRef, useState } from 'react';
@@ -8,6 +7,7 @@ import { useUser } from '../hooks/useUser';
 import styles from '../styles/Note.module.css';
 import BodyNote from './BodyNote';
 import HeaderNote from './HeaderNote';
+import NoteEditing from './NoteEditing';
 moment.locale('es');
 
 
@@ -19,8 +19,8 @@ const Note = ({ note, timeTransition }) => {
   const { name } = note.user;
 
   const [ isEditing, setIsEditing ] = useState(false);
-  const [ newContent, setNewContent ] = useState(content);
-  const [ newImportant, setNewImportant ] = useState(important);
+  
+  
   const [deleting, setDeleting] = useState(false);
   const [ dropdown, setDropdown ] = useState(false);
 
@@ -30,35 +30,12 @@ const Note = ({ note, timeTransition }) => {
 
   const dateFormatted = moment(date).startOf('minute').fromNow();
 
-  const handleUpdateNote = () => {
-    if (newContent.trim().length > 0) {
-      notes.update(id, newContent, newImportant);
-      resetNewNote();
-    }
-  };
-
-  const handleEditNote = () => {
+  const handleEditNote = useCallback(() => {
     setDropdown(false);
-    if (!isEditing) {
-      setIsEditing(true);
-      setNewContent(content);
-      setNewImportant(important);
-    } else
-      resetNewNote();
-  };
-
-  const resetNewNote = useCallback(() => {
-    setIsEditing(false);
-    setNewContent('');
-    setNewImportant(false);
-  }, []);
-
-  const handleContentChange = useCallback(e =>
-    setNewContent(e.target.value), []);
-
-  const handleImportantChange = useCallback(e =>
-    setNewImportant(e.target.checked), []);
-
+    if (!isEditing) setIsEditing(true);
+    else setIsEditing(false);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  
   const handleDelete = () => {
     setDeleting(!deleting);
     setTimeout(() => {
@@ -125,16 +102,16 @@ const Note = ({ note, timeTransition }) => {
           <div>
             <h5>{name}</h5>
           </div>
-          <BodyNote
-            isEditing={isEditing}
-            newContent={newContent}
-            handleContentChange={handleContentChange}
-            id={id}
-            newImportant={newImportant}
-            handleImportantChange={handleImportantChange}
-            handleUpdate={handleUpdateNote}
-            content={content}
-          />
+          {isEditing ? (
+            <NoteEditing
+              id={id}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              setDropdown={setDropdown}
+            />
+          )
+            : <BodyNote content = { content } />
+          }
         </motion.div>
       )}
     </AnimatePresence>

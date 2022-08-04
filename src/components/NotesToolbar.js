@@ -33,6 +33,7 @@ const NotesToolbar = () => {
     <div className={styles.Toolbar} ref={toolbarRef}>
       <FilterSelect />
       <div className={styles.ContainerSearchBox}>
+        <span className='material-symbols-outlined'>search</span>
         <InputAutoExpand
           type={searchField.type}
           placeholder={'Search note'}
@@ -40,7 +41,6 @@ const NotesToolbar = () => {
           handleChange={onChange}
           size={searchField.value.length}
         />
-        <span className='material-symbols-outlined'>search</span>
       </div>
       <NotesCounter />
     </div>
