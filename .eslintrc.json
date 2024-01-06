@@ -11,20 +11,14 @@
         "SwitchCase": 1
       }
     ],
-    "semi": [
-      "error",
-      "always"
-    ],
+    "semi": ["error", "never"],
     "no-trailing-spaces": [
       "error",
       {
         "skipBlankLines": true
       }
     ],
-    "quotes": [
-      "error",
-      "single"
-    ],
+    "quotes": ["error", "single"],
     "arrow-spacing": [
       "error",
       {
@@ -32,18 +26,8 @@
         "after": true
       }
     ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "block-spacing": [
-      "error",
-      "always"
-    ],
-    "space-before-blocks": [
-      "error",
-      "always"
-    ],
+    "block-spacing": ["error", "always"],
+    "space-before-blocks": ["error", "always"],
     "space-before-function-paren": [
       "error",
       {
@@ -51,9 +35,6 @@
         "named": "never"
       }
     ],
-    "space-in-parens": [
-      "error",
-      "never"
-    ]
+    "space-in-parens": ["error", "never"]
   }
 }
