@@ -3,17 +3,19 @@ const baseUrl = 'http://localhost:3001/login';
 const loginRequest = {};
 
 loginRequest.login = async credencials => {
-  const request = await fetch(baseUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(credencials)
-  });
+  // Mock login - accepts any credentials
+  const mockUser = {
+    username: credencials.username || 'User',
+    token: 'mock_token_' + Date.now(),
+    email: credencials.username + '@notes-app.local'
+  };
 
-  const user = await request.json();
-  if (user?.error) throw new Error(user.error);
-  return user;
+  return new Promise((resolve) => {
+    // Simulate network delay
+    setTimeout(() => {
+      resolve(mockUser);
+    }, 500);
+  });
 };
 
 export default loginRequest;
